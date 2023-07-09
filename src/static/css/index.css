@@ -1,0 +1,60 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: VT323, monospace;
+    color: var(--foreground-main);
+}
+
+
+:root {
+    --background-main: #1a1b21;
+    --foreground-main: #b1c487;
+}
+
+*::selection {
+    background-color: var(--foreground-main);
+    color: var(--background-main);
+}
+
+body {
+    height: 100vh;
+    background-color: var(--background-main);
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+header {
+    text-align: center;
+    margin: 40px 0 40px 0;
+}
+
+footer {
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    margin: 40px 30% 40px 30%;
+    font-size: 2.5rem;
+
+}
+
+footer a:hover {
+    background-color: var(--foreground-main);
+    color: var(--background-main);
+
+}
+
+.code-text {
+    margin: auto;
+    width: 40%;
+    font-size: 1.5rem;
+    padding: 1%;
+    border: 3px solid var(--foreground-main);
+}
+
