@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 
+
+<!-- TODO: move to separate style file -->
 <style>
 
+* {
+    color: var(--foreground-main);
+}
+
+:root {
+    --background-main: #1a1b21;
+    --foreground-main: #b1c487;
+}
+
+*::selection {
+    background-color: var(--foreground-main);
+    color: var(--background-main);
+}
+
+body {
+    background-color: var(--background-main);
+}
 
 h1 {
     font-size: 4rem;
+    color: var(--foreground-main);
     text-align: center;
     font-family: sans-serif;
+}
+
+a:hover {
+    color: var(--background-main);
+    background-color: var(--foreground-main);
 }
 
 
@@ -15,7 +40,7 @@ h1 {
 <html>
 
     <body>
-        <h1>Nothing here... feel free to continue</h1>
+        <h1>Nothing here... feel free to <a href="/">continue</a></h1>
     </body>
 
 </html>
