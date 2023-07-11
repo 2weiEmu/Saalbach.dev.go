@@ -19,6 +19,8 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         fs := http.FileServer(http.Dir("src/static"))
         http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
+    } else if match, _ := regexp.MatchString("^/about$", requestPath); match {
+        http.ServeFile(writer, request, "src/static/templates/about.html")
     }
 
     http.ServeFile(writer, request, "src/static/templates/404.html")
