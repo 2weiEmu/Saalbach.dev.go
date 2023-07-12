@@ -47,7 +47,7 @@ footer {
 
 }
 
-footer a:hover {
+a:hover {
     background-color: var(--foreground-main);
     color: var(--background-main);
 

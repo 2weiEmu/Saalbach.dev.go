@@ -10,7 +10,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
     requestPath := request.URL.Path
 
-    if match, _ := regexp.MatchString("^/$", requestPath); match {
+    if requestPath == "/" {
         IndexPage(writer, request)
 
     } else if match, _ := regexp.MatchString("^/css/", requestPath); match {
@@ -19,8 +19,10 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         fs := http.FileServer(http.Dir("src/static"))
         http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
-    } else if match, _ := regexp.MatchString("^/about$", requestPath); match {
+    } else if requestPath == "/about" {
         http.ServeFile(writer, request, "src/static/templates/about.html")
+    } else if requestPath == "/contact" {
+        http.ServeFile(writer, request, "src/static/templates/contact.html")
     }
 
     http.ServeFile(writer, request, "src/static/templates/404.html")
