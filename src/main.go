@@ -19,10 +19,19 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         fs := http.FileServer(http.Dir("src/static"))
         http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
+    } else if match, _ := regexp.MatchString("^/images/", requestPath); match {
+        // TODO: if statement can be improved
+        fmt.Println("Serving Static File...")
+        fs := http.FileServer(http.Dir("src/static"))
+        http.StripPrefix("static/", fs)
+        fs.ServeHTTP(writer, request)
+
     } else if requestPath == "/about" {
         http.ServeFile(writer, request, "src/static/templates/about.html")
     } else if requestPath == "/contact" {
         http.ServeFile(writer, request, "src/static/templates/contact.html")
+    } else if requestPath == "/setup" {
+        http.ServeFile(writer, request, "src/static/templates/setup.html")
     }
 
     http.ServeFile(writer, request, "src/static/templates/404.html")

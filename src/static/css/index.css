@@ -1,4 +1,5 @@
 /* TODO: make a globals CSS file */
+/* TODO: mobile styling */
 
 * {
     margin: 0;
@@ -33,6 +34,11 @@ h2 {
     font-size: 2.5rem;
 }
 
+h3 {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
 header {
     text-align: center;
     margin: 40px 0 40px 0;
@@ -44,13 +50,21 @@ footer {
     width: 50%;
     margin: 40px 25% 40px 25%;
     font-size: 2.5rem;
+}
 
+footer * {
+    padding: 15px;
 }
 
 a:hover {
     background-color: var(--foreground-main);
     color: var(--background-main);
 
+}
+
+img {
+    width: 40%;
+    margin: 0 30% 0 30%;
 }
 
 .code-text {
