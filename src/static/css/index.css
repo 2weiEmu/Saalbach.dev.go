@@ -80,3 +80,23 @@ img {
     width: 40%;
     font-size: 1.5rem;
 }
+
+@media only screen and (max-width: 640px) {
+    
+    .code-text {
+        width: 95%;
+    }
+
+    .code-sep {
+        width: 95%;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+    img {
+        margin: 0;
+        width: 100%;
+    }
+}
