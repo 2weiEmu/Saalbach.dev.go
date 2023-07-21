@@ -43,6 +43,8 @@ func main() {
     fmt.Println("Server is almost ready.")
 
     http.ListenAndServe(":8000", nil)
+
+    //http.ListenAndServeTLS("0.0.0.0:443", "cert", "private.key", nil)
 }
 
 /**
