@@ -72,6 +72,11 @@ img {
     width: 40%;
     font-size: 1.5rem;
     padding: 1%;
-    border: 3px solid var(--foreground-main);
+    /*border: 3px solid var(--foreground-main);*/
 }
 
+.code-sep {
+    margin: 0 auto 0 auto;
+    width: 40%;
+    font-size: 1.5rem;
+}
