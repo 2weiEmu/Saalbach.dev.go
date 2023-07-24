@@ -10,6 +10,8 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
     requestPath := request.URL.Path
 
+    fmt.Println("Request to: ", requestPath)
+
     if requestPath == "/" {
         IndexPage(writer, request)
 
@@ -17,13 +19,13 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
         fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))
-        http.StripPrefix("static/", fs)
+        //http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
     } else if match, _ := regexp.MatchString("^/images/", requestPath); match {
         // TODO: if statement can be improved
         fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))
-        http.StripPrefix("static/", fs)
+        http.StripPrefix("/static", fs)
         fs.ServeHTTP(writer, request)
 
     } else if requestPath == "/about" {
@@ -44,7 +46,7 @@ func main() {
 
     http.ListenAndServe(":8000", nil)
 
-    //http.ListenAndServeTLS("0.0.0.0:443", "cert", "private.key", nil)
+    //http.ListenAndServeTLS(":443", "cert", "private.key", nil)
 }
 
 /**
