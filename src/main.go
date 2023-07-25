@@ -34,9 +34,9 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates/contact.html")
     } else if requestPath == "/setup" {
         http.ServeFile(writer, request, "src/static/templates/setup.html")
+    } else {
+        http.ServeFile(writer, request, "src/static/templates/404.html")
     }
-
-    http.ServeFile(writer, request, "src/static/templates/404.html")
 }
 
 func main() {
