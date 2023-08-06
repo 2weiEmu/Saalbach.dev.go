@@ -18,6 +18,14 @@
                 <a href="/contact" class="nav-link">contact</a>
             </nav>
             <nav class="menu-navigation">
+                <div onclick="reveal_side_menu" class="menu-up">></div>
+                <div class="menu-content" id="side-menu">
+                    <a>home</a>
+                    <a>about</a>
+                    <a>projects</a>
+                    <a>blog</a>
+                    <a>contact</a>
+                </div>
             </nav>
             <div class="body-content">
                 <h1 class="main-header">Robert Saalbach</h1>
@@ -29,6 +37,17 @@
             </div>
         </div>
     </body>
+
+
+    <!-- I will commit sin and add a little bit of javascript -->
+    <script>
+        function reveal_side_menu() {
+            var sideMenu = document.getElementById("side-menu");
+
+            sideMenu.style.display = flex;
+            console.log("hi");
+        }
+    </script>
 
 
 </html>
