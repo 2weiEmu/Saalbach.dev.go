@@ -114,7 +114,7 @@ func main() {
  * PAGES
  */
 func IndexPage(writer http.ResponseWriter, request *http.Request) {
-    http.ServeFile(writer, request, "src/static/templates/index.html")
+    http.ServeFile(writer, request, "src/static/templates/newIndex.html")
 }
 
 

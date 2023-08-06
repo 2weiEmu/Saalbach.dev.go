@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Rosario&family=VT323&display=swap');
+
+:root {
+    --background: #EAD8C4;
+    --foreground: #343434;
+    --accent: #D41D6D;
+}
+
+img {
+    opacity: 1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: rosario;
+}
+
+h1, h2, h3, p {
+    color: var(--foreground);
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+.content-body {
+    display: flex;
+}
+
+.background-rotated {
+    position: fixed;
+    min-height: 100%;
+    width: 100%;
+    opacity: 0.05;
+    transform: rotate(135deg);
+    scale: 2.1;
+    object-fit: cover;
+}
+
+.menu-navigation {
+    visibility: none;
+}
+
+.sidebar-navigation {
+    min-width: 21.35%;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 50px;
+}
+
+.nav-link {
+    margin-left: 49px;
+    font-size: 60px;
+    height: 150px;
+    color: var(--foreground);
+    font-style: normal;
+    font-weight: 400;
+}
+
+#keyboard-logo {
+    height: 198px;
+    width: 168px;
+    margin-left: 34px;
+    font-size: unset;
+}
+
+h1 {
+    font-size: 80px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 36px;
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 400;
+}
+
+p {
+    line-height: 72px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    text-align: justify;
+    width: 1218px;
+    height: 432px; 
+    margin-top: 150px;
+}
+
+.main-header {
+    margin-top: 411px;
+}
+
+.sub-header {
+    margin-top: 13px;
+}
