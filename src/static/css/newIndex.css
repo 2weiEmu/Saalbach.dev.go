@@ -153,6 +153,12 @@ p {
 
 }
 
+.menu-up {
+    font-style: normal;
+    font-weight: 400;
+
+}
+
 .menu-content {
     display: none;
 }
