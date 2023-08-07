@@ -1,43 +1,66 @@
 <!DOCTYPE html>
 
-
 <html>
-
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-
+    
+    <head>    
         <link href="/css/index.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     </head>
 
     <body>
-        <header>
-            <h1>Contact Me</h1>
-            <h2>Robert A. Saalbach</h2>
-        </header>
+        <img class="background-rotated" src="/images/grid-background.png"/>
+        <div class="content-body">
+            <nav class="sidebar-navigation">
+                <a href="/"><img id="keyboard-logo" src="/images/keyboardlogo-black.png"/></a>
+                <a href="/about" class="nav-link">about</a>
+                <a href="/projects" class="nav-link">projects</a>
+                <a href="/blog" class="nav-link">blog</a>
+                <a href="/contact" class="nav-link nav-highlight">contact</a>
+            </nav>
+            <nav class="menu-navigation">
+                <div id="menu-up" class="menu-up">menu</div>
+                <div class="menu-content" id="side-menu">
+                    <a href="/about">about</a>
+                    <a href="/projects">projects</a>
+                    <a href="/blog">blog</a>
+                    <a class="nav-highlight" href="/contact">contact</a>
+                </div>
+            </nav>
+            <a href="/" id="mobile-logo-wrapper"><img src="/images/keyboardlogo-black.png" id="mobile-logo"></a>
+            <div class="body-content">
+                <h1 class="main-header">Contact Me</h1>
+                <h2 class="sub-header">robert saalbach</h2>
 
-        <!-- TODO: images on the side, things like that -->
-        <!-- TODO: add RSS Feed for blog -->
-        <!-- TODO: add box for easy instant emailing if wanted -->
-        <p class="code-sep">- - - - - -</p>
-        <p class="code-text"><a href="mailto:saalbach.robert@oulook.de">Email (saalbach.robert@outlook.de)</a></p>
-        <p class="code-text"><a href="https://www.github.com/2weiEmu">GitHub</a></p>
-        <p class="code-text"><a>LinkedIn</a></p>
-        <p class="code-sep">- - - - - -</p>
-
-        <!-- TODO: make form to submit something to my email -->
-
-        <footer>
-            <a href="/about">About (and Projects)</a>
-            <a href="/blog">Blog</a>
-            <a href="/contact">Contact</a>
-            <a href="/setup">My Setup</a>
-            <a href="/">Home</a>
-        </footer>
+                <p> 
+                <a href="mailto:saalbach@robert.outlook.de">saalbach.robert@outlook.de</a><br>
+                <a href="https://github.com/2weiEmu">GitHub</a><br>
+                <a>LinkedIn</a><br>
+                </p>
+            </div>
+        </div>
     </body>
 
-</html>
+
+    <!-- I will commit sin and add a little bit of javascript -->
+    <script>
+        var sideMenu = document.getElementById("side-menu");
+        var menuUp = document.getElementById("menu-up");
+
+        menuUp.addEventListener("click", function() {
+            // Function to toggle the sidebar menu
+
+            var currentDisplay = sideMenu.style.display;
+
+            if (currentDisplay == "none") {
+                sideMenu.style.display = "flex";
+            } else {
+                sideMenu.style.display = "none";
+            }
+            console.log("hi");
+
+        })
+
+    </script>
+
 
 </html>

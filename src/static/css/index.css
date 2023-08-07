@@ -69,6 +69,9 @@ body {
     color: var(--foreground);
     font-style: normal;
     font-weight: 400;
+}
+
+.nav-link-animate {
     animation-duration: 1.5s;
     animation-name: slide-in-side;
     animation-direction: normal;
@@ -87,6 +90,7 @@ h1 {
     font-style: normal;
     font-weight: 400;
 }
+
 
 h2 {
     font-size: 36px;
@@ -180,6 +184,9 @@ p {
         background-color: var(--background);
         padding: 0px 30px 0px 30px;
         width: 100%;
+    }
+
+    .menu-animate {
         animation: slide-in-bottom;
         animation-duration: 1s;
         animation-direction: normal;
@@ -196,6 +203,10 @@ p {
         margin: 0 0 90px 0px;
     }
 
+    .menu-content .nav-highlight {
+        color: var(--accent);
+    }
+
     .menu-content {
         flex-direction: column;
         background-color: var(--background);
@@ -207,10 +218,6 @@ p {
         position: fixed;
         right: 5%;
         top: -10px;
-        animation: slide-in-bottom;
-        animation-duration: 1s;
-        animation-direction: normal;
-        animation-iteration-count: 1;
     }
 
     #mobile-logo {
@@ -245,4 +252,8 @@ p {
         line-height: 52px;
         font-size: 24px;
     }
+}
+
+.nav-highlight {
+    color: var(--accent);
 }
