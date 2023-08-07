@@ -18,13 +18,12 @@
                 <a href="/contact" class="nav-link">contact</a>
             </nav>
             <nav class="menu-navigation">
-                <div onclick="reveal_side_menu" class="menu-up">></div>
+                <div id="menu-up" class="menu-up">></div>
                 <div class="menu-content" id="side-menu">
-                    <a>home</a>
-                    <a>about</a>
-                    <a>projects</a>
-                    <a>blog</a>
-                    <a>contact</a>
+                    <a href="/about">about</a>
+                    <a href="/projects">projects</a>
+                    <a href="/blog">blog</a>
+                    <a href="/contact">contact</a>
                 </div>
             </nav>
             <div class="body-content">
@@ -41,12 +40,23 @@
 
     <!-- I will commit sin and add a little bit of javascript -->
     <script>
-        function reveal_side_menu() {
-            var sideMenu = document.getElementById("side-menu");
+        var sideMenu = document.getElementById("side-menu");
+        var menuUp = document.getElementById("menu-up");
 
-            sideMenu.style.display = flex;
+        menuUp.addEventListener("click", function() {
+            // Function to toggle the sidebar menu
+
+            var currentDisplay = sideMenu.style.display;
+
+            if (currentDisplay == "none") {
+                sideMenu.style.display = "flex";
+            } else {
+                sideMenu.style.display = "none";
+            }
             console.log("hi");
-        }
+
+        })
+
     </script>
 
 

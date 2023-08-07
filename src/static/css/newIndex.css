@@ -4,6 +4,8 @@
     --background: #EAD8C4;
     --foreground: #343434;
     --accent: #D41D6D;
+    --background-alt: #FBE9D5;
+
 }
 
 img {
@@ -154,13 +156,12 @@ p {
         font-size: 64px;
         font-weight: bold;
         color: var(--accent);
-        margin: 5px 0 0 5%;
         user-select: none;
+        background-color: var(--background);
+        padding: 0px 30px 0px 30px;
+        width: 100%;
     }
 
-    .menu-content {
-        display: none;
-    }
 
     .menu-content a {
         color: var(--foreground);
@@ -171,9 +172,14 @@ p {
         margin: 0 0 90px 0px;
     }
 
-     .menu-content {
-        display: flex;
+    .menu-content {
         flex-direction: column;
+        background-color: var(--background);
+        padding: 30px;
+    }
+
+    .menu-content {
+        display: none;
     }
 
     .sidebar-navigation {
@@ -193,7 +199,9 @@ p {
     }
     
     p {
-        margin: 150px 5% 0 5%;
-        width: 90%;
+        margin: 150px 10% 0 10%;
+        width: 80%;
+        line-height: 52px;
+        font-size: 24px;
     }
 }
