@@ -143,7 +143,21 @@ p {
 
 }
 
+@keyframes slide-in-bottom {
+    from {
+        margin-top: -100px;
+    }
+
+    to {
+    }
+
+}
+
 .menu-content {
+    display: none;
+}
+
+#mobile-logo-wrapper {
     display: none;
 }
 
@@ -160,6 +174,10 @@ p {
         background-color: var(--background);
         padding: 0px 30px 0px 30px;
         width: 100%;
+        animation: slide-in-bottom;
+        animation-duration: 1s;
+        animation-direction: normal;
+        animation-iteration-count: 1;
     }
 
 
@@ -176,6 +194,23 @@ p {
         flex-direction: column;
         background-color: var(--background);
         padding: 30px;
+    }
+
+    #mobile-logo-wrapper {
+        display: inline-block;
+        position: fixed;
+        right: 5%;
+        top: -10px;
+        animation: slide-in-bottom;
+        animation-duration: 1s;
+        animation-direction: normal;
+        animation-iteration-count: 1;
+    }
+
+    #mobile-logo {
+        height: 118px;
+        width: 88px;
+
     }
 
     .menu-content {
