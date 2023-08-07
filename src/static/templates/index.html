@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 
-
 <html>
-
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-
+    
+    <head>    
         <link href="/css/index.css" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     </head>
 
     <body>
-        <header>
-            <h1>Robert Saalbach</h1>
-            <h2>ZweiEmu / 2weiEmu</h2>
-        </header>
+        <img class="background-rotated" src="/images/grid-background.png"/>
+        <div class="content-body">
+            <nav class="sidebar-navigation">
+                <a href="/"><img id="keyboard-logo" src="/images/keyboardlogo.png"/></a>
+                <a href="/about" class="nav-link">about</a>
+                <a href="/projects" class="nav-link">projects</a>
+                <a href="/blog" class="nav-link">blog</a>
+                <a href="/contact" class="nav-link">contact</a>
+            </nav>
+            <nav class="menu-navigation">
+                <div id="menu-up" class="menu-up">menu</div>
+                <div class="menu-content" id="side-menu">
+                    <a href="/about">about</a>
+                    <a href="/projects">projects</a>
+                    <a href="/blog">blog</a>
+                    <a href="/contact">contact</a>
+                </div>
+            </nav>
+            <a href="/" id="mobile-logo-wrapper"><img src="/images/keyboardlogo.png" id="mobile-logo"></a>
+            <div class="body-content">
+                <h1 class="main-header">Robert Saalbach</h1>
+                <h2 class="sub-header">2weiemu / zweiemu</h2>
 
-            <p class="code-sep">- - - - - -</p>
-            <!-- I am incredibly sorry for this indenting -->
-            <p class="code-text">
-            I'm a student at the <a href="https://www.tudelft.nl/en/">TU Delft</a> in the Netherlands doing a Bachelor in <a href="https://www.tudelft.nl/en/education/programmes/bachelors/cse/bachelor-of-computer-science-and-engineering/">Computer Science (and Engineering)</a>, looking at Aersopace-related opportunities as well. Being interested in Systems-programming I achieved a perfect grade in the most closely related subject so far, and being registered for the related variant. My interest in Computer Science only grew with me competing in an <a href="https://battlecode.org/past.html">MIT-hosted Hackathon ()</a>, the computer science lessons in High school and me completing a lot of <a>work in my own time</a> as well. If you are like-minded and enthusiastic, come talk to me, I am always open to try things.
-            </p>
-            <p class="code-sep">- - - - - -</p>
-
-            <p class="code-text">
-            >>> (Robert - guy who tried writing an <a>interpreter for a baby programming language</a> - still not happy with result)
-            </p>
-
-        <footer>
-            <a href="/about">About (and Projects)</a>
-            <a href="/blog">Blog</a>
-            <a href="/contact">Contact</a>
-            <a href="/setup">My Setup</a>
-        </footer>
+                <p> 
+                I'm a student at the <a href="https://www.tudelft.nl/en/">TU Delft</a> in the Netherlands doing a bachelor in <a href="https://www.tudelft.nl/en/education/programmes/bachelors/cse/bachelor-of-computer-science-and-engineering/">Computer Science (and Engineering)</a>, looking at aersopace-related opportunities as well. Being interested in systems-programming I achieved a perfect grade in the most closely related subject so far, and being registered for the related variant. My interest in computer science only grew with me competing in an <a href="https://battlecode.org/past.html">MIT-hosted hackathon ()</a>, the computer science lessons in high school and me completing a lot of <a>work in my own time</a> as well. If you are like-minded and enthusiastic, come talk to me, I am always open to try things.
+                </p>
+            </div>
+        </div>
     </body>
 
-</html>
 
+    <!-- I will commit sin and add a little bit of javascript -->
+    <script>
+        var sideMenu = document.getElementById("side-menu");
+        var menuUp = document.getElementById("menu-up");
+
+        menuUp.addEventListener("click", function() {
+            // Function to toggle the sidebar menu
+
+            var currentDisplay = sideMenu.style.display;
+
+            if (currentDisplay == "none") {
+                sideMenu.style.display = "flex";
+            } else {
+                sideMenu.style.display = "none";
+            }
+            console.log("hi");
+
+        })
+
+    </script>
+
+
+</html>

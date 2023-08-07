@@ -15,7 +15,8 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     fmt.Println("Request to: ", requestPath)
 
     if requestPath == "/" {
-        IndexPage(writer, request)
+        http.ServeFile(writer, request, "src/static/templates/index.html")
+
 
     } else if match, _ := regexp.MatchString("^/css/", requestPath); match {
 
@@ -109,13 +110,4 @@ func main() {
         fmt.Println(err)
     }
 }
-
-/**
- * PAGES
- */
-func IndexPage(writer http.ResponseWriter, request *http.Request) {
-    http.ServeFile(writer, request, "src/static/templates/newIndex.html")
-}
-
-
 
