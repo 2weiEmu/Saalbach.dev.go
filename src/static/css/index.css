@@ -1,6 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Rosario&family=VT323&display=swap');
 
 /* TODO: make the mobile font a bit bigger, or perhaps also with REM according to Nic */
+
+@font-face {
+    font-family: rosario;
+    src: url("fonts/Rosario-Regular.ttf");
+}
 
 :root {
     --background: #EAD8C4;
@@ -106,6 +110,10 @@ body {
     width: 78%;
 }
 
+.menu-icon {
+    width: 84px;
+}
+
 p {
     line-height: 72px;
     font-style: normal;
@@ -126,13 +134,6 @@ p {
 
 .sub-header {
     margin-top: 13px;
-}
-
-
-.menu-up {
-    font-style: normal;
-    font-weight: 400;
-
 }
 
 .menu-content {
