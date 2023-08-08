@@ -6,7 +6,6 @@
     --background: #EAD8C4;
     --foreground: #343434;
     --accent: #D41D6D;
-
 }
 
 img {
@@ -21,13 +20,22 @@ img {
 
 h1, h2, h3, p {
     color: var(--foreground);
+    font-style: normal;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 80px;
+}
+
+h2 {
+    font-size: 36px;
+    color: var(--accent);
 }
 
 h3 {
     margin-top: 50px;
     font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
 }
 
 a {
@@ -41,12 +49,6 @@ body {
     background-color: var(--background);
 }
 
-.content-body {
-    display: flex;
-    height: 100%;
-    align-items: flex-start;
-}
-
 .background-rotated {
     position: fixed;
     min-height: 100%;
@@ -57,6 +59,13 @@ body {
     object-fit: cover;
     z-index: -1;
 }
+
+.content-body {
+    display: flex;
+    height: 100%;
+    align-items: flex-start;
+}
+
 
 .menu-navigation {
     display: none;
@@ -93,20 +102,6 @@ body {
     font-size: unset;
 }
 
-h1 {
-    font-size: 80px;
-    font-style: normal;
-    font-weight: 400;
-}
-
-
-h2 {
-    font-size: 36px;
-    color: var(--accent);
-    font-style: normal;
-    font-weight: 400;
-}
-
 .body-content {
     width: 78%;
 }
@@ -133,40 +128,6 @@ p {
     margin-top: 13px;
 }
 
-
-@keyframes slide-in-top {
-    from {
-        opacity: 0;
-        margin-top: 300px;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in-side {
-
-    from {
-        opacity: 0;
-        margin-left: -49px;
-    }
-
-    to {
-        opacity: 1;
-    }
-
-}
-
-@keyframes slide-in-bottom {
-    from {
-        margin-top: -100px;
-    }
-
-    to {
-    }
-
-}
 
 .menu-up {
     font-style: normal;
@@ -388,4 +349,38 @@ input[type="image"] {
 
 input:focus, textarea:focus {
     outline: none;
+}
+
+@keyframes slide-in-top {
+    from {
+        opacity: 0;
+        margin-top: 300px;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-side {
+
+    from {
+        opacity: 0;
+        margin-left: -49px;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+@keyframes slide-in-bottom {
+    from {
+        margin-top: -100px;
+    }
+
+    to {
+    }
+
 }
