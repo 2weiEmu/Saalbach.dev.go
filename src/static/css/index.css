@@ -299,7 +299,6 @@ input[type="image"] {
 
     .projects-grid {
         display: grid;
-        margin-top: 150px;
         grid-template-columns: 100%; 
         row-gap: 50px;
         column-gap: unset;
@@ -368,14 +367,10 @@ input[type="image"] {
 
     }
 
-    .menu-content {
+    .menu-content, .sidebar-navigation {
         display: none;
     }
 
-    .sidebar-navigation {
-        display: none;
-    }
-    
     p, .body-form {
         width: unset;
         margin-top: 30px;
@@ -383,15 +378,6 @@ input[type="image"] {
         font-size: 24px;
     }
 
-
-    .blog-search {
-        width: 80%;
-        margin: 0 5px 0 5px;
-    }
-
-    .blog-submit {
-        width: 20%;
-    }
 }
 
 .nav-highlight {
