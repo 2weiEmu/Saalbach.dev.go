@@ -14,37 +14,39 @@
                 <a href="/"><img id="keyboard-logo" src="/images/keyboardlogo-black.png"/></a>
                 <a href="/about" class="nav-link">about</a>
                 <a href="/projects" class="nav-link">projects</a>
-                <a href="/blog" class="nav-link">blog</a>
-                <a href="/contact" class="nav-link nav-highlight">contact</a>
+                <a href="/blog" class="nav-link nav-highlight">blog</a>
+                <a href="/contact" class="nav-link">contact</a>
             </nav>
             <nav class="menu-navigation">
                 <div id="menu-up" class="menu-up">menu</div>
                 <div class="menu-content" id="side-menu">
                     <a href="/about">about</a>
                     <a href="/projects">projects</a>
-                    <a href="/blog">blog</a>
-                    <a class="nav-highlight" href="/contact">contact</a>
+                    <a class="nav-highlight" href="/blog">blog</a>
+                    <a href="/contact">contact</a>
                 </div>
             </nav>
             <a href="/" id="mobile-logo-wrapper"><img src="/images/keyboardlogo-black.png" id="mobile-logo"></a>
             <div class="body-content">
-                <h1 class="main-header">Contact Me</h1>
+                <h1 class="main-header">My Blogs</h1>
                 <h2 class="sub-header">robert saalbach</h2>
 
-                <p class="main-content"> 
-                <a href="mailto:saalbach@robert.outlook.de">saalbach.robert@outlook.de</a><br>
-                <a href="https://github.com/2weiEmu">GitHub</a><br>
-                <a>LinkedIn</a><br>
-                </p>
-
-                <!-- TODO: implement this so people can send me e-mail or so like this -->
-                <h3>contact form</h3>
-                <form class="body-form" action="/contact">
-                    <input required type="email" placeholder="your email..."></input>
-                    <input required type="text" placeholder="your name..."></input>
-                    <textarea required rows="15" placeholder="write me..."></textarea>
-                    <input type="image" src="/images/mail.png" border="0" alt="Submit" />
+                <form class="blog-form main-content">
+                    <input class="blog-search" type="search" placeholder="search for blog..."/> <!-- TODO: add datalist element for search suggestions -->
+                    <input class="blog-submit" type="image" src="/images/search-icon.png" border="0" alt="Submit" />
                 </form>
+
+                <!-- TODO: templating for the blog articles -->
+                <div class="blog-list">
+                    <div class="blog-entry">
+                        <a href=""><h3 class="blog-title">blog title</h3></a><p class="blog-date">DD/MM/YYYY</p>
+                        <p class="blog-desc">Here will go a brief description of the blog at hand...</p>
+                    </div>
+                    <div class="blog-entry">
+                        <h3 class="blog-title">another blog title</h3><p class="blog-date">DD/MM/YYYY</p>
+                        <p class="blog-desc">Here goes another brief description of a blog that is yet to exist</p>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
@@ -73,3 +75,5 @@
 
 
 </html>
+
+

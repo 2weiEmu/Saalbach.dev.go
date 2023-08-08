@@ -31,12 +31,8 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.StripPrefix("/static", fs)
         fs.ServeHTTP(writer, request)
 
-    } else if requestPath == "/about" {
-        http.ServeFile(writer, request, "src/static/templates/about.html")
-    } else if requestPath == "/contact" {
-        http.ServeFile(writer, request, "src/static/templates/contact.html")
-    } else if requestPath == "/setup" {
-        http.ServeFile(writer, request, "src/static/templates/setup.html")
+    } else if requestPath == "/about" || requestPath == "/blog" || requestPath == "/contact" || requestPath == "/projects" {
+        http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
     } else {
         http.ServeFile(writer, request, "src/static/templates/404.html")
     }
