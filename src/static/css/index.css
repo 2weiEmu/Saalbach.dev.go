@@ -291,14 +291,19 @@ input[type="image"] {
 
 @media only screen and (max-width: 1290px) {
 
+
+    .body-content {
+        width: 80%;
+        margin: 0 10% 0 10%;
+    }
+
     .projects-grid {
         display: grid;
-        width: 80%;
-        margin: 150px 10% 0 10%;
+        margin-top: 150px;
         grid-template-columns: 100%; 
         row-gap: 50px;
         column-gap: unset;
-
+        width: unset;
         color: var(--foreground);
     }
 
@@ -370,34 +375,14 @@ input[type="image"] {
     .sidebar-navigation {
         display: none;
     }
-
-    .body-content {
-        width: 100%;
-    }
-
-    .main-header {
-        margin: 200px 5% 15px 5%;
-    }
-
-    .sub-header {
-        margin: 0px 5% 0px 5%;
-    }
     
     p, .body-form {
-        margin: 30px 10% 0 10%;
-        width: 80%;
+        width: unset;
+        margin-top: 30px;
         line-height: 52px;
         font-size: 24px;
     }
 
-    h3 {
-        margin: 0 10% 0 10%;
-        width: 80%;
-    }
-
-    .blog-form {
-        width: 100%;
-    }
 
     .blog-search {
         width: 80%;
