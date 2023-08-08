@@ -18,7 +18,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates/index.html")
 
 
-    } else if match, _ := regexp.MatchString("^/css/", requestPath); match {
+    } else if match, _ := regexp.MatchString("^/((css)|(js))/", requestPath); match {
 
         fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))

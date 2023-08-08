@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rosario&family=VT323&display=swap');
 
+/* TODO: make the mobile font a bit bigger, or perhaps also with REM according to Nic */
+
 :root {
     --background: #EAD8C4;
     --foreground: #343434;

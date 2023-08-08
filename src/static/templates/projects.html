@@ -18,7 +18,7 @@
                 <a href="/contact" class="nav-link">contact</a>
             </nav>
             <nav class="menu-navigation">
-                <div id="menu-up" class="menu-up">menu</div>
+                <div id="menu-up" class="menu-up" onclick="toggleMenu()">menu</div>
                 <div class="menu-content" id="side-menu">
                     <a href="/about">about</a>
                     <a class="nav-highlight" href="/projects">projects</a>
@@ -55,25 +55,7 @@
 
 
     <!-- I will commit sin and add a little bit of javascript -->
-    <script>
-        var sideMenu = document.getElementById("side-menu");
-        var menuUp = document.getElementById("menu-up");
-
-        menuUp.addEventListener("click", function() {
-            // Function to toggle the sidebar menu
-
-            var currentDisplay = sideMenu.style.display;
-
-            if (currentDisplay != "flex") {
-                sideMenu.style.display = "flex";
-            } else {
-                sideMenu.style.display = "none";
-            }
-            console.log("hi");
-
-        })
-
-    </script>
+    <script src="/js/index.js"></script>
 
 
 </html>
