@@ -161,6 +161,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
     } else if requestPath == "/blog" {
         // NOTE: strategy for loading search... simply don't include the things that don't match.... yes very fun.
+        // TODO: make it so that on page reload it empties the search params (perhaps requires more javascript)
         
         fmt.Println("filtering blogs")
 
