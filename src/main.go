@@ -29,10 +29,11 @@ type Blog struct {
 }
 
 type BlogOverview struct {
-    BlogSearch string;
     AllBlogs []Blog;
 }
 
+
+// TODO: make the log.fatals maybe just logs that go into an actual log -> we don't want the site to crash everytime someone messes around
 
 var Blogs BlogOverview // TODO: make this not be a global variable (I mean its my website so no one really cares but meh)
 
@@ -87,7 +88,6 @@ func InitialBlogRead() (BlogOverview) {
     fmt.Println(TotalBlogs)
 
     return BlogOverview {
-        BlogSearch: "",
         AllBlogs: TotalBlogs,
 
     }
@@ -115,8 +115,8 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         blogToLoad, err := os.Open("./" + requestPath)
         defer blogToLoad.Close()
 
-        if err != nil { 
-            log.Fatal(err)
+        if err != nil { // if invalid blog loaded, I will for now just redirect
+            http.Redirect(writer, request, "/", http.StatusNotFound)
         }
 
         scanner := bufio.NewScanner(blogToLoad)
@@ -142,6 +142,10 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         }
 
         blogTemplate, err := template.ParseFiles("src/static/templates/blog-article.html")
+        if err != nil {
+            log.Fatal(err)
+        }
+
         blogTemplate.Execute(writer, blogArticle)
         
 
@@ -156,14 +160,41 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     } else if requestPath == "/about" || requestPath == "/contact" || requestPath == "/projects" {
         http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
     } else if requestPath == "/blog" {
-        // TODO: parse the search
+        // NOTE: strategy for loading search... simply don't include the things that don't match.... yes very fun.
+        
+        fmt.Println("filtering blogs")
+
+        searchParams := request.URL.Query()
+        search := ""
+
+        if searchParams.Has("search") {
+            search = searchParams["search"][0]
+        }
+
+        regex, err := regexp.Compile(`(?i)` + search)
+
+        if err != nil {
+            log.Println("Failed to search.")
+            http.Redirect(writer, request, "/", http.StatusBadRequest)
+        }
+
+        var filteredBlogs BlogOverview
+
+        for i := 0; i < len(Blogs.AllBlogs); i++ {
+            title := Blogs.AllBlogs[i].BlogTitle
+            if regex.MatchString(title) {
+                filteredBlogs.AllBlogs = append(filteredBlogs.AllBlogs, Blogs.AllBlogs[i])
+            }
+        }
+
+
         blogPage, err := template.ParseFiles("src/static/templates/blog.html")
 
         if err != nil {
             log.Fatal(err)
         }
 
-        err = blogPage.Execute(writer, Blogs)
+        err = blogPage.Execute(writer, filteredBlogs)
 
         if err != nil {
             log.Fatal(err)
