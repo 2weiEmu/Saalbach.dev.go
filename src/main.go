@@ -1,12 +1,97 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
-    "os"
-    "regexp"
-    "strconv"
+	"bufio"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"regexp"
+	"strconv"
+	"text/template"
 )
+
+type BlogParagraph struct {
+    BlogParagraph string;
+}
+
+type BlogArticle struct {
+    BlogTitle string;
+    BlogDate string;
+    BlogContent []BlogParagraph;
+}
+
+type Blog struct {
+    BlogTitle string;
+    BlogDate string;
+    BlogDescription string;
+    BlogPathName string;
+}
+
+type BlogOverview struct {
+    BlogSearch string;
+    AllBlogs []Blog;
+}
+
+
+var Blogs BlogOverview // TODO: make this not be a global variable (I mean its my website so no one really cares but meh)
+
+// NOTE: obviously, optimally you would want some kind of blog manifesto where you keep the key information about the blog without neccessarily 
+// loading the whole file - but that A. prob won't happen anyway, because obv you only read what you read, but I would still have to open every 
+// file like this, this would be the obvious optimisation, but I am not gonna do that for now - I will keep it simple (unless if loading times 
+// become too big)
+func InitialBlogRead() (BlogOverview) {
+
+    allBlogs, err := os.ReadDir("./blogs/")
+
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    var TotalBlogs []Blog;
+
+    for _, e := range allBlogs { 
+
+        blog, err := os.Open("blogs/" + e.Name())
+        defer blog.Close()
+
+        if err != nil {
+            log.Fatal(err)
+        }
+
+        scanner := bufio.NewScanner(blog)
+
+        scanner.Scan()
+        title := scanner.Text()
+
+        scanner.Scan()
+        date := scanner.Text()
+
+        scanner.Scan()
+        description := scanner.Text()
+
+        scanner.Scan()
+        path := scanner.Text()
+
+        newBlog := Blog {
+            BlogTitle: title,
+            BlogDate: date,
+            BlogDescription: description,
+            BlogPathName: path,
+        }
+
+        TotalBlogs = append(TotalBlogs, newBlog)
+
+    }
+
+    fmt.Println(TotalBlogs)
+
+    return BlogOverview {
+        BlogSearch: "",
+        AllBlogs: TotalBlogs,
+
+    }
+}
 
 func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
@@ -24,6 +109,43 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         fs := http.FileServer(http.Dir("src/static"))
         //http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
+    } else if match, _ := regexp.MatchString("^/blogs/", requestPath); match {
+
+        fmt.Println("Serving blog...")
+        blogToLoad, err := os.Open("./" + requestPath)
+        defer blogToLoad.Close()
+
+        if err != nil { 
+            log.Fatal(err)
+        }
+
+        scanner := bufio.NewScanner(blogToLoad)
+
+        scanner.Scan()
+        title := scanner.Text()
+        scanner.Scan()
+        date := scanner.Text()
+        scanner.Scan();
+        scanner.Scan();
+
+        var blogContent []BlogParagraph
+
+        for scanner.Scan() { 
+            blogContent = append(blogContent, BlogParagraph { BlogParagraph: scanner.Text() })
+        }
+
+        blogArticle := BlogArticle {
+            BlogTitle: title,
+            BlogDate: date,
+            BlogContent: blogContent,
+
+        }
+
+        blogTemplate, err := template.ParseFiles("src/static/templates/blog-article.html")
+        blogTemplate.Execute(writer, blogArticle)
+        
+
+
     } else if match, _ := regexp.MatchString("^/images/", requestPath); match {
         // TODO: if statement can be improved
         fmt.Println("Serving Static File...")
@@ -31,12 +153,27 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.StripPrefix("/static", fs)
         fs.ServeHTTP(writer, request)
 
-    } else if requestPath == "/about" || requestPath == "/blog" || requestPath == "/contact" || requestPath == "/projects" {
+    } else if requestPath == "/about" || requestPath == "/contact" || requestPath == "/projects" {
         http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
+    } else if requestPath == "/blog" {
+        // TODO: parse the search
+        blogPage, err := template.ParseFiles("src/static/templates/blog.html")
+
+        if err != nil {
+            log.Fatal(err)
+        }
+
+        err = blogPage.Execute(writer, Blogs)
+
+        if err != nil {
+            log.Fatal(err)
+        }
+
     } else {
         http.ServeFile(writer, request, "src/static/templates/404.html")
     }
 }
+
 
 func main() {
 
@@ -55,6 +192,9 @@ func main() {
 
     recommendedFormat := "./main deploy|test [port number] [certificate location] [private key location]"
     osArgsLen := len(os.Args) 
+
+
+    Blogs = InitialBlogRead()
 
     // must give deploy or test - otherwise invalid
     if osArgsLen >= 2 {

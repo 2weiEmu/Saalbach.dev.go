@@ -28,24 +28,12 @@
             </nav>
             <a href="/" id="mobile-logo-wrapper"><img src="/images/keyboardlogo-black.png" id="mobile-logo"></a>
             <div class="body-content">
-                <h1 class="main-header">My Blogs</h1>
-                <h2 class="sub-header">robert arno saalbach</h2>
+                <h1 class="main-header">{{ .BlogTitle }}</h1>
+                <h2 class="sub-header">on {{ .BlogDate }} by robert arno saalbach</h2>
 
-                <form class="blog-form main-content">
-                    <input class="blog-search" type="search" placeholder="search for blog..."/> <!-- TODO: add datalist element for search suggestions -->
-                    <input class="blog-submit" type="image" src="/images/search-icon.png" border="0" alt="Submit" />
-                </form>
-
-                <!-- TODO: templating for the blog articles -->
-                <div class="blog-list">
-
-                    {{ range .AllBlogs }}
-                    <div class="blog-entry">
-                        <a href="blogs/{{ .BlogPathName }}"><h3 class="blog-title">{{ .BlogTitle }}</h3></a><p class="blog-date">{{ .BlogDate }}</p>
-                        <p class="blog-desc">{{ .BlogDescription }}</p>
-                    </div>
-                    {{ end }}
-                </div>
+                {{ range .BlogContent }}
+                    {{ .BlogParagraph }}
+                {{ end }}
             </div>
         </div>
     </body>
