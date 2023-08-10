@@ -4,7 +4,7 @@ Just my small personal website, with everything you would need to know about me,
 
 # To-Do
 
-~~- [ ] Add a Mascot~~
+- [ ] ~~Add a Mascot~~
 - [x] Create About Page
 - [x] Make Blog Page
 - [x] Add Text / Re-write
