@@ -217,6 +217,7 @@ input[type="image"] {
 
 .blog-title {
     width: unset;
+    color: var(--accent);
 }
 
 .blog-date {
@@ -246,6 +247,10 @@ input[type="image"] {
     border: 2px solid rgba(52, 52, 52, 0.05);
     padding: 10px;
     min-height: 400px;
+}
+
+.project-item h3 {
+    color: var(--accent);
 }
 
 .proj-desc {
