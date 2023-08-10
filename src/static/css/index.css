@@ -313,7 +313,11 @@ input[type="image"] {
     }
 
     .blog-list {
-        margin: 0 10% 0 10%;
+        width: 100%;
+    }
+
+    .blog-entry {
+        width: 100%;
     }
 
     .menu-content {
@@ -349,16 +353,18 @@ input[type="image"] {
     .blog-form {
         flex-direction: column;
         width: 100%;
+        
     }
 
     .blog-search {
         min-width: 100%;
+        margin-bottom: 30px;
     }
 
     .blog-submit {
         max-width: 60px;
         min-height: 60px;
-        padding: 5px 30px 5px 30px;
+        padding: 5px 50px 5px 50px;
     }
 
 }
