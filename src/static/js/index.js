@@ -1,6 +1,18 @@
 function toggleMenu() {
     var sideMenu = document.getElementById("side-menu");
     sideMenu.style.display = sideMenu.style.display != "flex" ? "flex" : "none";
+
+    var menuIcon = document.getElementsByClassName("menu-icon")[0];
+
+
+    if (menuIcon.style.rotate != "90deg") {
+        menuIcon.style.rotate = "90deg";
+        menuIcon.style.padding = "20px 10px 0 20px";
+    } else {
+        menuIcon.style.rotate = "0deg";
+        menuIcon.style.padding = "20px 20px 20px 0px";
+    }
+
 }
 
 

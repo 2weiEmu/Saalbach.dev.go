@@ -110,7 +110,8 @@ body {
 }
 
 .menu-icon {
-    width: 84px;
+    width: 44px;
+    padding: 20px 20px 20px 0;
 }
 
 p {
@@ -336,6 +337,7 @@ input[type="image"] {
     #mobile-logo {
         height: 118px;
         width: 88px;
+        margin-top: 5px;
 
     }
 
