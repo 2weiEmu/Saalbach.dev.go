@@ -18,14 +18,22 @@ type BlogParagraph struct {
 type BlogArticle struct {
     BlogTitle string;
     BlogDate string;
+    BlogAuthor string;
+    BlogDescription string;
+    BlogTopics []string;
+    BlogNotes string;
     BlogContent []BlogParagraph;
 }
 
 type Blog struct {
+    BlogVersion int;
     BlogTitle string;
     BlogDate string;
+    BlogAuthor string;
     BlogDescription string;
     BlogPathName string;
+    BlogTopics []string;
+    BlogNotes string;
 }
 
 type BlogOverview struct {

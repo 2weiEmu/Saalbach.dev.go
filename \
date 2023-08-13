@@ -1,0 +1,64 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func ReadVersion1BlogHeader(blogFile *os.File, scanner *bufio.Scanner) Blog {
+
+    scanner.Scan()
+    title := scanner.Text()
+
+    scanner.Scan()
+    date := scanner.Text()
+
+    scanner.Scan()
+    description := scanner.Text()
+
+    scanner.Scan()
+    path := scanner.Text()
+
+    while scanner.Scan() {
+
+    }
+
+    newBlog := Blog {
+        BlogTitle: title,
+        BlogDate: date,
+        BlogDescription: description,
+        BlogPathName: path,
+    }
+
+    UpgradeVersion1To2(blogFile, newBlog)
+
+    return newBlog
+
+}
+
+func ReadVersion1Blog() {
+
+}
+
+func UpgradeVersion1To2(blogFile *os.File, blogData Blog, blogText []string) {
+    
+    fmt.Fprintln(blogFile, "")
+
+    os.Truncate(blogFile.Name(), 0)
+
+    fmt.Fprintln(blogFile, "2\n" + blogData.BlogTitle + "\n" + blogData.BlogDate)
+    fmt.Fprintln("-\n" + blogData.BlogDescription + "\n" + Blog.BlogPathName + "\n")
+    fmt.Fprintln("-\n-\n")
+
+    // blog date may contain additional information, this has to be parsed out
+   
+}
+
+func ReadVersion2BlogHeader(blogfile *os.File) Blog {
+
+}
+
+func ReadVersion2Blog() {
+
+}
