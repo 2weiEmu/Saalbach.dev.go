@@ -17,6 +17,7 @@ The name of the blog should be the BlogPathName.
 line 1 to be clear: [BlogVersionNumber -> full int]
 [BlogTitle]
 [BlogDate]
+[BlogAuthor]
 [BlogShortPreview / Description]
 [BlogPathName]
 [BlogTopics]
