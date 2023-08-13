@@ -11,3 +11,20 @@ The name of the blog should be the BlogPathName.
 
                 >]
 
+
+## new Blog structure (version 2) (TODO)
+
+line 1 to be clear: [BlogVersionNumber -> full int]
+[BlogTitle]
+[BlogDate]
+[BlogShortPreview / Description]
+[BlogPathName]
+[BlogTopics]
+[BlogNotes] 
+[
+ Written 
+ Blog 
+ in 
+ HTML
+ ...
+]
