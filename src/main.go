@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"net/http"
@@ -20,7 +19,7 @@ type BlogArticle struct {
     BlogDate string;
     BlogAuthor string;
     BlogDescription string;
-    BlogTopics []string;
+    BlogTopics string;
     BlogNotes string;
     BlogContent []BlogParagraph;
 }
@@ -32,7 +31,7 @@ type Blog struct {
     BlogAuthor string;
     BlogDescription string;
     BlogPathName string;
-    BlogTopics []string;
+    BlogTopics string;
     BlogNotes string;
 }
 
@@ -67,27 +66,8 @@ func InitialBlogRead() (BlogOverview) {
         if err != nil {
             log.Fatal(err)
         }
-
-        scanner := bufio.NewScanner(blog)
-
-        scanner.Scan()
-        title := scanner.Text()
-
-        scanner.Scan()
-        date := scanner.Text()
-
-        scanner.Scan()
-        description := scanner.Text()
-
-        scanner.Scan()
-        path := scanner.Text()
-
-        newBlog := Blog {
-            BlogTitle: title,
-            BlogDate: date,
-            BlogDescription: description,
-            BlogPathName: path,
-        }
+        
+        newBlog := ReadHeaderBlogV2(blog)
 
         TotalBlogs = append(TotalBlogs, newBlog)
 
@@ -127,27 +107,8 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
             http.Redirect(writer, request, "/", http.StatusNotFound)
         }
 
-        scanner := bufio.NewScanner(blogToLoad)
 
-        scanner.Scan()
-        title := scanner.Text()
-        scanner.Scan()
-        date := scanner.Text()
-        scanner.Scan();
-        scanner.Scan();
-
-        var blogContent []BlogParagraph
-
-        for scanner.Scan() { 
-            blogContent = append(blogContent, BlogParagraph { BlogParagraph: scanner.Text() })
-        }
-
-        blogArticle := BlogArticle {
-            BlogTitle: title,
-            BlogDate: date,
-            BlogContent: blogContent,
-
-        }
+        blogArticle := ReadBodyBlogV2(blogToLoad)
 
         blogTemplate, err := template.ParseFiles("src/static/templates/blog-article.html")
         if err != nil {

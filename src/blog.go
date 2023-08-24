@@ -5,96 +5,126 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
-func ReadVersion1BlogHeaderAndConvert(blogFile *os.File, scanner *bufio.Scanner) Blog {
+func ReadHeaderBlogV2(blogFile *os.File) Blog {
+    scanner := bufio.NewScanner(blogFile)
+    newBlog := Blog{ }
+
+    // Reading the version 1 blog
 
     scanner.Scan()
-    title := scanner.Text()
+    newBlog.BlogVersion, _ = strconv.Atoi(scanner.Text())
 
     scanner.Scan()
-    date := scanner.Text()
+    newBlog.BlogTitle = scanner.Text()
 
     scanner.Scan()
-    description := scanner.Text()
+    newBlog.BlogDate = scanner.Text()
 
     scanner.Scan()
-    path := scanner.Text()
+    newBlog.BlogAuthor = scanner.Text()
 
-    var lines []string
+    scanner.Scan()
+    newBlog.BlogDescription = scanner.Text()
 
-    // I will be real, I was not the most awake when I wrote all of this code.
+    scanner.Scan()
+    newBlog.BlogPathName = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogTopics = scanner.Text() // TODO: have to be upgraded, but you can't search for it yet so its okay
+
+    scanner.Scan()
+    newBlog.BlogNotes = scanner.Text()
+
+    return newBlog;
+}
+
+func ReadBodyBlogV2(blogFile *os.File) BlogArticle {
+    scanner := bufio.NewScanner(blogFile)
+    newBlog := BlogArticle{ }
+
+
+    scanner.Scan()
+
+    scanner.Scan()
+    newBlog.BlogTitle = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogDate = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogAuthor = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogDescription = scanner.Text()
+
+    scanner.Scan()
+
+    scanner.Scan()
+    newBlog.BlogTopics = scanner.Text() // TODO: have to be upgraded, but you can't search for it yet so its okay
+
+    scanner.Scan()
+    newBlog.BlogNotes = scanner.Text()
+
+    var text []BlogParagraph;
+
     for scanner.Scan() {
-        line := scanner.Text()
-        lines = append(lines, line)
+        text = append(text, BlogParagraph { scanner.Text() } )
     }
 
-    newBlog := Blog {
-        BlogTitle: title,
-        BlogDate: date,
-        BlogDescription: description,
-        BlogPathName: path,
+    newBlog.BlogContent = text;
+
+    return newBlog;
+}
+
+func UpgradeBlogV1ToV2(blogFile *os.File) { // TODO: alright this function can wiat, I have one blog I shall do it manually
+
+    scanner := bufio.NewScanner(blogFile)
+    newBlog := Blog{ }
+
+    // Reading the version 1 blog
+
+    scanner.Scan()
+    newBlog.BlogTitle = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogDate = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogDescription = scanner.Text()
+
+    scanner.Scan()
+    newBlog.BlogPathName = scanner.Text()
+
+    var text []string;
+
+    for scanner.Scan() {
+        text = append(text, scanner.Text())
     }
 
-    UpgradeVersion1To2(blogFile, newBlog, lines)
+    // Writing the version 2 blog
 
-    return newBlog
-
-}
-
-func ReadVersion1Blog() {
-
-}
-
-func UpgradeVersion1To2(blogFile *os.File, blogData Blog, blogText []string) {
+    os.Truncate("blogs/" + newBlog.BlogPathName, 0)
     
-    fmt.Fprintln(blogFile, "")
+    fmt.Fprintln(blogFile, "2\n" + newBlog.BlogTitle)
 
-    os.Truncate(blogFile.Name(), 0)
+    // formating the date, i.e moving every character after 
+    dateSplits := strings.Split(newBlog.BlogDate, " ")
 
-    fmt.Fprintln(blogFile, "2\n" + blogData.BlogTitle + "\n" + blogData.BlogDate)
-    fmt.Fprintln(blogFile, "-\n" + blogData.BlogDescription + "\n" + blogData.BlogPathName)
-    fmt.Fprintln(blogFile, "-\n-")
+    fmt.Fprintln(blogFile, dateSplits[0])
 
-    for _, line := range blogText {
-        fmt.Fprintln(blogFile, line) // prob not the best way, since you know, individual writes to buffer, but meh
+    fmt.Fprintln(blogFile, "robert arno saalbach")
+    fmt.Fprintln(blogFile, newBlog.BlogDescription)
+    fmt.Fprintln(blogFile, newBlog.BlogPathName)
+    fmt.Fprintln(blogFile, "-")
+
+    for i := 1; i < len(dateSplits); i++ {
+        fmt.Fprintf(blogFile, dateSplits[i] + " ")
     }
-   
-}
 
-func ReadVersion2BlogHeader(blogfile *os.File) Blog {
-
-    scanner := bufio.NewScanner(blogfile)
-
-    blogFile := Blog{}
-
-    scanner.Scan()
-    blogFile.BlogVersion, _ = strconv.Atoi(scanner.Text())
-
-    scanner.Scan()
-    blogFile.BlogTitle = scanner.Text()
-
-    scanner.Scan()
-    blogFile.BlogDate = scanner.Text()
-
-    scanner.Scan()
-    blogFile.BlogAuthor = scanner.Text()
-
-    scanner.Scan()
-    blogFile.BlogDescription = scanner.Text()
-
-    scanner.Scan()
-    blogFile.BlogPathName = scanner.Text()
-
-    scanner.Split())
-    scanner.Scan()
-    blogFile.BlogTopics = scanner.Text()
-
-    scanner.Scan()
-    blogFile.BlogNotes = scanner.Text()
-
-}
-
-func ReadVersion2Blog() {
-
+    for _, line := range text { 
+        fmt.Fprintln(blogFile, line)
+    }
 }

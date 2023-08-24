@@ -4,7 +4,7 @@
 The name of the blog should be the BlogPathName.
 
 (line 1 to be clear): [BlogTitle]
-[BlogDate]
+[BlogDate] DD-MM-YYYY
 [BlogShortPreview / Description]
 [BlogPathName]
 [BlogWritten in HTML (maybe be multi-line)
@@ -16,7 +16,7 @@ The name of the blog should be the BlogPathName.
 
 line 1 to be clear: [BlogVersionNumber -> full int]
 [BlogTitle]
-[BlogDate]
+[BlogDate] DD-MM-YYYY
 [BlogAuthor]
 [BlogShortPreview / Description]
 [BlogPathName]
@@ -29,3 +29,5 @@ line 1 to be clear: [BlogVersionNumber -> full int]
  HTML
  ...
 ]
+
+TODO: I should honestly make this blog thing its own module in some way, so its separated from this code and can simply be called in some way.

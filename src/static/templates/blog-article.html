@@ -29,7 +29,10 @@
             <a href="/" id="mobile-logo-wrapper"><img src="/images/keyboardlogo-black.png" id="mobile-logo"></a>
             <div class="body-content">
                 <h1 class="main-header">{{ .BlogTitle }}</h1>
-                <h2 class="sub-header">on {{ .BlogDate }} by robert arno saalbach</h2>
+                <h2 class="sub-header">on {{ .BlogDate }} by {{ .BlogAuthor }}</h2>
+
+                <p>topics: {{ .BlogTopics }}</p>
+                <p style="font-size: 16px; line-height: 16px; margin-top: 10px;">notes: {{ .BlogNotes }}</p>
 
                 {{ range .BlogContent }}
                     {{ .BlogParagraph }}
