@@ -1,84 +1,123 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"text/template"
+
+	"github.com/mattn/go-sqlite3"
 )
 
-type BlogParagraph struct {
-    BlogParagraph string;
-}
+var (
+    db *sql.DB 
+    sqlite3Conn sqlite3.SQLiteConn
+    fetchBlogStatement *sql.Stmt 
+    searchBlogsStatement *sql.Stmt
+)
 
-type BlogArticle struct {
+type FormattedBlog struct {
     BlogTitle string;
     BlogDate string;
     BlogAuthor string;
-    BlogDescription string;
     BlogTopics string;
     BlogNotes string;
-    BlogContent []BlogParagraph;
+    BlogContent []string;
 }
 
-type Blog struct {
-    BlogVersion int;
+type RawBlog struct {
     BlogTitle string;
     BlogDate string;
     BlogAuthor string;
-    BlogDescription string;
-    BlogPathName string;
     BlogTopics string;
     BlogNotes string;
+    BlogContent string;
 }
 
-type BlogOverview struct {
-    AllBlogs []Blog;
+type BlogHeader struct {
+    BlogTitle string
+    BlogDate string
+    BlogAuthor string
+    BlogDescription string
+    BlogPathname string
+    BlogTopics string
+    BlogNotes string
 }
-
 
 // TODO: make the log.fatals maybe just logs that go into an actual log -> we don't want the site to crash everytime someone messes around
-
-var Blogs BlogOverview // TODO: make this not be a global variable (I mean its my website so no one really cares but meh)
 
 // NOTE: obviously, optimally you would want some kind of blog manifesto where you keep the key information about the blog without neccessarily 
 // loading the whole file - but that A. prob won't happen anyway, because obv you only read what you read, but I would still have to open every 
 // file like this, this would be the obvious optimisation, but I am not gonna do that for now - I will keep it simple (unless if loading times 
 // become too big)
-func InitialBlogRead() (BlogOverview) {
 
-    allBlogs, err := os.ReadDir("./blogs/")
+func GetAllBlogHeaders(statement *sql.Stmt, titleFilter string) []BlogHeader {
+
+    rows, err := statement.Query("%" + titleFilter + "%")
+    defer rows.Close()
 
     if err != nil {
-        log.Fatal(err)
+        fmt.Println("Prepared statement failed to execute with error:", err)
     }
 
-    var TotalBlogs []Blog;
+    var blogHeaders []BlogHeader;
 
-    for _, e := range allBlogs { 
+    for rows.Next() {
 
-        blog, err := os.Open("blogs/" + e.Name())
-        defer blog.Close()
+        var header BlogHeader;
+        err = rows.Scan(
+            &header.BlogTitle, &header.BlogDate, &header.BlogAuthor, 
+            &header.BlogDescription, &header.BlogPathname, &header.BlogTopics, 
+            &header.BlogNotes,
+            )
 
         if err != nil {
-            log.Fatal(err)
+            fmt.Println("Failed to retrieve row:", rows, "With the error:", err)
+            return nil
         }
-        
-        newBlog := ReadHeaderBlogV2(blog)
 
-        TotalBlogs = append(TotalBlogs, newBlog)
-
-    }
-
-    fmt.Println(TotalBlogs)
-
-    return BlogOverview {
-        AllBlogs: TotalBlogs,
+        header.BlogDate = strings.TrimSuffix(header.BlogDate, "T00:00:00Z")
+        blogHeaders = append(blogHeaders, header)
 
     }
+    
+
+    return blogHeaders
+
+}
+
+func GetBlogUsingPathname(statement *sql.Stmt, pathname string) RawBlog {
+
+    rows, err := statement.Query(pathname)
+
+    defer rows.Close()
+
+    if err != nil {
+        // TODO:
+    }
+
+    var rawBlog RawBlog
+
+    rows.Next();
+
+    err = rows.Scan(
+        &rawBlog.BlogTitle, &rawBlog.BlogDate, &rawBlog.BlogAuthor,
+        &rawBlog.BlogTopics, &rawBlog.BlogNotes, &rawBlog.BlogContent,
+        )
+
+    if err != nil {
+        // TODO:
+    }
+    rawBlog.BlogDate = strings.TrimSuffix(rawBlog.BlogDate, "T00:00:00Z")
+
+    return rawBlog
+
+
 }
 
 func RouteHandler(writer http.ResponseWriter, request *http.Request) {
@@ -86,19 +125,22 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     requestPath := request.URL.Path
 
     fmt.Println("Request to: ", requestPath)
-
+    
+    // Serving the main page
     if requestPath == "/" {
         http.ServeFile(writer, request, "src/static/templates/index.html")
 
 
+    // Serving static files
     } else if match, _ := regexp.MatchString("^/((css)|(js))/", requestPath); match {
-
         fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))
         //http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
-    } else if match, _ := regexp.MatchString("^/blogs/", requestPath); match {
 
+
+    // Serving any blog
+    } else if match, _ := regexp.MatchString("^/blogs/", requestPath); match {
         fmt.Println("Serving blog...")
         blogToLoad, err := os.Open("./" + requestPath)
         defer blogToLoad.Close()
@@ -107,18 +149,18 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
             http.Redirect(writer, request, "/", http.StatusNotFound)
         }
 
-
-        blogArticle := ReadBodyBlogV2(blogToLoad)
+        // getting the blog article, so that it may be inserted into the template
+        blogArticle := GetBlogUsingPathname(fetchBlogStatement, strings.Split(requestPath, "/")[2])
 
         blogTemplate, err := template.ParseFiles("src/static/templates/blog-article.html")
         if err != nil {
-            log.Fatal(err)
+           log.Fatal(err)
         }
 
         blogTemplate.Execute(writer, blogArticle)
-        
 
 
+    // Serving any images
     } else if match, _ := regexp.MatchString("^/images/", requestPath); match {
         // TODO: if statement can be improved
         fmt.Println("Serving Static File...")
@@ -126,8 +168,13 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.StripPrefix("/static", fs)
         fs.ServeHTTP(writer, request)
 
+
+    // Serving the about, contact or projects page
     } else if requestPath == "/about" || requestPath == "/contact" || requestPath == "/projects" {
         http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
+
+
+    // Serving the main blogs page
     } else if requestPath == "/blog" {
         // NOTE: strategy for loading search... simply don't include the things that don't match.... yes very fun.
         // TODO: make it so that on page reload it empties the search params (perhaps requires more javascript)
@@ -141,22 +188,10 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
             search = searchParams["search"][0]
         }
 
-        regex, err := regexp.Compile(`(?i)` + search)
+        var filteredBlogs []BlogHeader
+        filteredBlogs = GetAllBlogHeaders(searchBlogsStatement, search)
 
-        if err != nil {
-            log.Println("Failed to search.")
-            http.Redirect(writer, request, "/", http.StatusBadRequest)
-        }
-
-        var filteredBlogs BlogOverview
-
-        for i := 0; i < len(Blogs.AllBlogs); i++ {
-            title := Blogs.AllBlogs[i].BlogTitle
-            if regex.MatchString(title) {
-                filteredBlogs.AllBlogs = append(filteredBlogs.AllBlogs, Blogs.AllBlogs[i])
-            }
-        }
-
+        fmt.Println("filteredBlogs for blog page:", filteredBlogs)
 
         blogPage, err := template.ParseFiles("src/static/templates/blog.html")
 
@@ -170,8 +205,12 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
             log.Fatal(err)
         }
 
+
+    // Serving the 404 page
     } else {
         http.ServeFile(writer, request, "src/static/templates/404.html")
+
+
     }
 }
 
@@ -183,6 +222,7 @@ func main() {
     /*
      * NOTE: Recommended format for easily launching
      * ./main deploy|test [port number] [certificate location] [private key location]
+     * TODO: make this use the flags package that go has available
      */
 
     // default values for flags
@@ -193,9 +233,6 @@ func main() {
 
     recommendedFormat := "./main deploy|test [port number] [certificate location] [private key location]"
     osArgsLen := len(os.Args) 
-
-
-    Blogs = InitialBlogRead()
 
     // must give deploy or test - otherwise invalid
     if osArgsLen >= 2 {
@@ -226,7 +263,25 @@ func main() {
     http.HandleFunc("/", RouteHandler)
     fmt.Println("Server is almost ready.")
 
-    var err error;
+    var err error
+    db, err = sql.Open("sqlite3", "file:./src/blog-database?cache=shared")
+
+    defer db.Close()
+
+    if err != nil {
+        // TODO:
+        log.Fatal("failed to open db with error ", err)
+    }
+
+    if err = db.Ping(); err != nil {
+        log.Fatal("failed to ping db with error ", err)
+    }
+
+    fetchBlogStatement, err = db.Prepare(`SELECT blogtitle, blogdate, blogauthor, blogtopics, blognotes, blogcontent FROM blogs WHERE blogpathname = ?`)
+    searchBlogsStatement, err = db.Prepare(`SELECT blogtitle, blogdate, blogauthor, blogdescription, blogpathname, blogtopics, blognotes FROM blogs WHERE blogtitle LIKE ?`)
+
+    defer fetchBlogStatement.Close()
+    defer searchBlogsStatement.Close()
 
     if deployType == "test" {
         err = http.ListenAndServe(":" + port, nil)
