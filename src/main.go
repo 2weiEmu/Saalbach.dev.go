@@ -21,15 +21,6 @@ var (
     searchBlogsStatement *sql.Stmt
 )
 
-type FormattedBlog struct {
-    BlogTitle string;
-    BlogDate string;
-    BlogAuthor string;
-    BlogTopics string;
-    BlogNotes string;
-    BlogContent []string;
-}
-
 type RawBlog struct {
     BlogTitle string;
     BlogDate string;
