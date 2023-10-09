@@ -115,10 +115,10 @@ body {
 }
 
 p {
-    line-height: 72px;
+    line-height: 56px;
     font-style: normal;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 20px;
     text-align: justify;
     width: 78%;
     margin-top: 30px;
