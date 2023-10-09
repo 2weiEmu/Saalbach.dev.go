@@ -39,9 +39,9 @@
                 <!-- TODO: templating for the blog articles -->
                 <div class="blog-list">
 
-                    {{ range .AllBlogs }}
+                    {{ range . }}
                     <div class="blog-entry">
-                        <a href="blogs/{{ .BlogPathName }}">
+                        <a href="blogs/{{ .BlogPathname }}">
                             <h3 class="blog-title">{{ .BlogTitle }}</h3>
                         </a>
                         <p class="blog-date">{{ .BlogDate }} by {{ .BlogAuthor }}</p>
