@@ -13,3 +13,4 @@ Just my small personal website, with everything you would need to know about me,
 - [ ] Add Mux from Go for better code
 - [ ] Make it so that the reusable parts of a website are reused, using some standard writers and things like that (just for compactness and cleanliness on our side, and also easier modification if required - of course some logic might be needed (a little for some of the highlighting we do in the reusable parts but it should be fine)
 - [ ] Make a comment section
+- [ ] Make it so that for recipe sections the person can adjust the amount for the total amount of people they need

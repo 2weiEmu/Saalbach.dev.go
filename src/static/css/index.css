@@ -52,6 +52,13 @@ body {
     background-color: var(--background);
 }
 
+ul {
+    color: var(--foreground);
+    margin-left: 30px;
+    line-height: 30px;
+    font-size: 24px;
+}
+
 .background-rotated {
     position: fixed;
     min-height: 100%;

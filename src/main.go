@@ -119,7 +119,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     
     // Serving the main page
     if requestPath == "/" {
-        http.ServeFile(writer, request, "src/static/templates/index.html")
+        http.ServeFile(writer, request, "src/static/templates/main.html")
 
 
     // Serving static files
