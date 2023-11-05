@@ -133,12 +133,6 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     // Serving any blog
     } else if match, _ := regexp.MatchString("^/blogs/", requestPath); match {
         fmt.Println("Serving blog...")
-        blogToLoad, err := os.Open("./" + requestPath)
-        defer blogToLoad.Close()
-
-        if err != nil { // if invalid blog loaded, I will for now just redirect
-            http.Redirect(writer, request, "/", http.StatusNotFound)
-        }
 
         // getting the blog article, so that it may be inserted into the template
         blogArticle := GetBlogUsingPathname(fetchBlogStatement, strings.Split(requestPath, "/")[2])
