@@ -199,7 +199,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     }
 }
 
-func httpRedirect(writer http.ResponseWriter, request *http.Request) {
+func httpRedirect(w http.ResponseWriter, req *http.Request) {
     // remove/add not default ports from req.Host
     target := "https://" + req.Host + req.URL.Path 
     if len(req.URL.RawQuery) > 0 {
