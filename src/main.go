@@ -199,6 +199,17 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     }
 }
 
+func httpRedirect(writer http.ResponseWriter, request *http.Request) {
+    // remove/add not default ports from req.Host
+    target := "https://" + req.Host + req.URL.Path 
+    if len(req.URL.RawQuery) > 0 {
+        target += "?" + req.URL.RawQuery
+    }
+    log.Printf("redirect to: %s", target)
+    http.Redirect(w, req, target, http.StatusPermanentRedirect)
+
+}
+
 
 func main() {
 
@@ -279,6 +290,8 @@ func main() {
 
         certificate = os.Args[3]
         privateKey = os.Args[4]
+
+        go http.ListenAndServe(":80", http.HandlerFunc(httpRedirect))
 
         err = http.ListenAndServeTLS(":" + port, certificate, privateKey, nil)
     }
