@@ -119,16 +119,16 @@ func hashUser(addr string) string {
     return hex.EncodeToString(h.Sum(nil))
 }
 
-func WriteNewUserOrIncrement(userHash string) {
-    row := db.QueryRow(`SELECT visitorHash FROM visitors WHERE visitorHash = ?`, userHash)
+func WriteNewUserOrIncrement(userHash string, visitPath string) {
+    row := db.QueryRow(`SELECT visitRoute FROM visit_routes WHERE visitRoute = ?`, visitPath)
 
     var temp string
     err := row.Scan(&temp)
 
     if err == sql.ErrNoRows {
         // have to insert the user
-        db.Exec(`INSERT INTO visitors (visitorHash, visitorCount) VALUES ( ? , 1)`, userHash)
-        fmt.Println("New User")
+        db.Exec(`INSERT INTO visit_routes (visitRoute, visitCount) VALUES ( ? , 1)`, visitPath)
+        fmt.Println("New Route")
 
     } else if err != nil {
         // some other error has occured
@@ -137,8 +137,8 @@ func WriteNewUserOrIncrement(userHash string) {
 
     } else {
         // increment the found user count by 1
-        db.Exec(`UPDATE visitors SET visitorCount = visitorCount + 1 WHERE visitorHash = ?`, userHash)
-        fmt.Println("Incremented User")
+        db.Exec(`UPDATE visit_routes SET visitCount = visitCount + 1 WHERE visitRoute = ?`, visitPath)
+        fmt.Println("Incremented Path")
 
     }
 }
@@ -154,7 +154,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     // Serving the main page
     if requestPath == "/" {
         http.ServeFile(writer, request, "src/static/templates/index.html")
-        WriteNewUserOrIncrement(requestIPHash)
+        WriteNewUserOrIncrement(requestIPHash, "/")
 
 
     // Serving static files
@@ -178,7 +178,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         }
 
         blogTemplate.Execute(writer, blogArticle)
-        WriteNewUserOrIncrement(requestIPHash)
+        WriteNewUserOrIncrement(requestIPHash, requestPath)
 
 
     // Serving any images
@@ -193,7 +193,7 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     // Serving the about, contact or projects page
     } else if requestPath == "/about" || requestPath == "/contact" || requestPath == "/projects" {
         http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
-        WriteNewUserOrIncrement(requestIPHash)
+        WriteNewUserOrIncrement(requestIPHash, requestPath)
 
 
     // Serving the main blogs page
@@ -226,12 +226,13 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         if err != nil {
             log.Fatal(err)
         }
-        WriteNewUserOrIncrement(requestIPHash)
+        WriteNewUserOrIncrement(requestIPHash, requestPath)
 
 
     // Serving the 404 page
     } else {
         http.ServeFile(writer, request, "src/static/templates/404.html")
+        WriteNewUserOrIncrement(requestIPHash, requestPath)
 
 
     }
