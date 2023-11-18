@@ -1,0 +1,119 @@
+:root {
+    --text: #ffffff; 
+    --background: #0f0f0f; 
+    --primary: #a19991; 
+    --secondary: #151919; 
+    --accent: #737d87;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Fira Code', monospace; /* TODO: add font file */
+}
+
+body {
+    background-color: var(--background);
+    min-width: 100vw;
+}
+
+h1 {
+    font-size: 4rem;
+    margin: 0;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.sec-header {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--primary);
+    font-weight: normal;
+}
+
+a {
+    color: var(--primary);
+}
+
+.pri-col {
+    color: var(--primary);
+}
+
+.sec-col {
+    color: var(--secondary);
+}
+
+.text-col {
+    color: var(--text);
+}
+
+.acc-col {
+    color: var(--accent);
+}
+
+.top-section {
+    min-height: calc(100vh - 150px);
+    padding: 75px;
+}
+
+.code-window {
+    display: inline-block;
+    background-color: #000000;
+    border-radius: 15px;
+    padding: 6px;
+    width: 50%;
+    margin: 0 25% 0 25%;
+}
+
+#ascii-art {
+    text-align: center;
+}
+
+.first-container, .second-container, .third-container {
+    margin: 0;
+    padding: 0;
+}
+
+.first-container {
+    height: 25%;
+}
+
+.third-container {
+    height: 25%;
+    width: 100%;
+}
+
+.sub-links {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+.skills-section, .blogs-section {
+    min-height: calc(100vh - 150px);
+    padding: 75px;
+}
+
+#skill-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.skill-item {
+    background-color: var(--secondary);
+    margin: 10px 2.5% 10px 2.5%;
+    width: 45%;
+    min-height: 64px;
+    border-radius: 15px;
+}
+
+.skill-icon {
+    height: 64px;
+}

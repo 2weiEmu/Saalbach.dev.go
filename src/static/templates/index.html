@@ -1,48 +1,65 @@
-<!DOCTYPE html>
+<!DOCTYPE html5>
+
 
 <html>
     
-    <head>    
-        <link href="/css/index.css?version=3.1" rel="stylesheet" type="text/css">
+    <head>
+        <link href="/css/new.css?version=4.1" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     </head>
 
-    <body>
-        <img class="background-rotated" src="/images/grid-background.png"/>
-        <div class="content-body">
-            <nav class="sidebar-navigation">
-                <a href="/"><img id="keyboard-logo" src="/images/keyboardlogo.png"/></a>
-                <a href="/about" class="nav-link nav-link-animate">about</a>
-                <a href="/projects" class="nav-link nav-link-animate">projects</a>
-                <a href="/blog" class="nav-link nav-link-animate">blog</a>
-                <a href="/contact" class="nav-link nav-link-animate">contact</a>
-            </nav>
-            <nav class="menu-navigation">
-                <div id="menu-up" class="menu-up" onclick="toggleMenu()"><img class="menu-icon" src="/images/menu.png"/></div>
-                <div class="menu-content" id="side-menu">
-                    <a href="/about">about</a>
-                    <a href="/projects">projects</a>
-                    <a href="/blog">blog</a>
-                    <a href="/contact">contact</a>
-                </div>
-            </nav>
-            <a href="/" id="mobile-logo-wrapper"><img src="/images/keyboardlogo.png" id="mobile-logo"></a>
-            <div class="body-content">
-                <h1 class="main-header" id="main-name"></h1>
-                <h2 class="sub-header">2weiemu / zweiemu</h2>
 
-                <p class="main-content"> 
-                I'm a student at the <a href="https://www.tudelft.nl/en/">TU Delft</a> in the Netherlands doing a bachelor in <a href="https://www.tudelft.nl/en/education/programmes/bachelors/cse/bachelor-of-computer-science-and-engineering/">Computer Science (and Engineering)</a>, looking at aerospace-related opportunities as well. Being interested in systems-programming I achieved a perfect grade in the most closely related subject so far, and being registered for the related variant. My interest in computer science only grew with me competing in an <a href="https://battlecode.org/past.html">MIT-hosted hackathon (2020)</a>, the computer science lessons in high school and me completing a lot of <a href="/projects">work in my own time</a> as well. If you are like-minded and enthusiastic, come talk to me, I am always open to try things.
-                </p>
+    <body>
+        <div class="top-section">
+            <div class="first-container">
+                <h1>Robert Arno Saalbach</h1>
+                <h3>2weiEmu · ZweiEmu · <a href="">CV</a> · <a href="">RSS</a></h3>
+            </div>
+
+            <div class="second-container">
+            <div class="code-window">
+                <pre class="text-col">
+<span class="pri-col"> [ robert@saalbach.dev ~/ ] $ </span>./show-links.sh
+</pre>
+                <pre class="text-col" id="ascii-art">
+<span class="sec-col"> _______________                  ________________                 ________________</span>
+<span class="sec-col">/###############\                /####</span>________<span class="sec-col">####\               /################\</span>
+<span class="sec-col">|####</span>_<span class="sec-col">##########|                |###</span>/ _    _ \<span class="sec-col">###|               |## </span>__________<span class="sec-col"> ##|
+|###</span>|_|.____<span class="sec-col">####|                |##</span>/ |<span class="sec-col">#</span>\--/<span class="sec-col">#</span>| \<span class="sec-col">##|               |##</span>/―_      _―\<span class="sec-col">##|
+|###</span>| || __ \<span class="sec-col">###|                |#</span>| /<span class="sec-col">########</span>\ |<span class="sec-col">#|               |##</span>|  ―_  _―  |<span class="sec-col">##|</span>
+<span class="sec-col">|###</span>| || || |<span class="sec-col">###|                |#</span>\ \<span class="sec-col">#</span>_<span class="sec-col">####</span>__/ |<span class="sec-col">#|               |##</span>|    ――    |<span class="sec-col">##|
+|###</span>|_||_||_|<span class="sec-col">###|                |##</span>\ \_|<span class="sec-col">##</span>|   /<span class="sec-col">##|               |##</span>\__________/<span class="sec-col">##|
+|###############|                |###</span>\__|<span class="sec-col">##</span>|__/<span class="sec-col">###|               |################|
+\###############/                \################/               \################/</span>
+   <a href="https://www.linkedin.com/in/robert-saalbach-418414203/"><span class="text-col">linkedin.com</span></a>                   <a href="https://github.com/2weiEmu/"><span class="text-col">github.com/2weiEmu</span></a>               <a href="mailto:robert@saalbach.dev"><span class="text-col">robert@saalbach.dev</span></a>
+
+Click a link
+
+</pre>
+            </div>
+            </div>
+            <div class="third-container">
+                <span class="sec-header sub-links">
+                    <a class="acc-col" href="#skills">Skills & Projects</a>
+                    <a class="acc-col" href="#blogs">Blogs</a>
+                    <a class="acc-col" href="">Curriculum Vitae</a>
+                </span>
             </div>
         </div>
+        <div class="skills-section" id="skills">
+            <h1>Skills & Projects</h1>
+            <div id="skill-list">
+                <div class="skill-item"><img src="/images/goicon.png" class="skill-icon"></div> <!-- TODO: scale down image -->
+                <div class="skill-item"></div>
+                <div class="skill-item"></div>
+                <div class="skill-item"></div>
+                <div class="skill-item"></div>
+                <div class="skill-item"></div>
+            </div>
+        </div>
+        <div class="blogs-section" id="blogs">
+
+        </div>
     </body>
-
-    <div id="bottom-margin"></div>
-
-
-    <!-- I will commit sin and add a little bit of javascript -->
-    <script src="/js/index.js"></script>
-
 
 </html>
