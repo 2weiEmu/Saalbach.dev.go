@@ -1,5 +1,6 @@
 :root {
     --text: #ffffff; 
+    --text-par: #dfdfdf;
     --background: #0f0f0f; 
     --primary: #a19991; 
     --secondary: #151919; 
@@ -20,6 +21,10 @@ html, body {
 body {
     background-color: var(--background);
     min-width: 100vw;
+}
+
+* {
+    color: var(--text-par);
 }
 
 h1 {
@@ -308,7 +313,6 @@ a {
     }
 
     .skill-item > p {
-        display: inline;
         font-size: 0.75rem;
         line-height: 1.25rem;
         margin: 0;

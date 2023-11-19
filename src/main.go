@@ -44,7 +44,7 @@ func GetHeaders(filter string) []BlogItem {
     // data is [][]string
     for _, line := range data {
         
-        if m, _ := regexp.MatchString(filter, line[1]); m {
+        if m, _ := regexp.MatchString("(?i)" + filter, line[1]); m {
             var item BlogItem
             item.Path = line[0]
             item.Title = line[1]
