@@ -15,4 +15,49 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Fira Code', FiraCode, monospace; /* TODO: add font file */
+    background-color: var(--background);
+}
+
+* {
+    font-weight: normal;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    height: 30px;
+    padding: 6px;
+    font-size: 16px;
+}
+
+.footer * {
+    margin: 0 20px 0 20px;
+}
+
+body {
+    padding: 50px;
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin: 5px 0 5px 0;
+}
+
+h3 {
+    font-size: 2rem;
+    margin: 5px 0 5px 0;
+}
+
+a {
+    color: var(--primary);
+}
+
+.subheader {
+    color: var(--primary);
+}
+
+.content-body {
+    width: 40%;
+    margin: 50px 30% 0 30%;
+
 }

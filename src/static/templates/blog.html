@@ -7,25 +7,28 @@
         <link href="/css/blog.css?version=4.1" rel="stylesheet" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 
+    </head>
+
+    <body>
         <h1>{{ .Title }}</h1>
-        <h3>By {{ .Author }} · <a href="/">Home</a> · <a href="">RSS</a>
+        <h3 class="subheader">By {{ .Author }} · <a href="/">Home</a> · <a href="">RSS</a>
             {{ range .Tags }}
             · {{ . }}
             {{ end }}
         </h3>
-    </head>
 
-    <body>
-        <p>{{ .Date }}</p>
-        {{ .Content }}
+        <div class="content-body">
+            <p>Released on: {{ .Date }}</p>
+            {{ .Content }}
+        </div>
     </body>
 
-    <footer>
-        <a>LinkedIn</a>
-        <a>GitHub</a>
-        <a>Email</a>
+    <div class="footer">
+        <a href="https://www.linkedin.com/in/robert-saalbach-418414203/">LinkedIn</a>
+        <a href="https://github.com/2weiEmu">GitHub</a>
+        <a href="mailto:robert@saalbach.dev">Email</a>
         <a>Curriculum Vitae</a>
         <a>RSS</a>
-    </footer>
+    </div>
 
 </html>
