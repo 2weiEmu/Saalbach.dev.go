@@ -151,7 +151,7 @@ a {
     display: inline;
 }
 
-.item-wrapper:hover {
+.item-wrapper:hover, .item-wrapper:focus {
     height: 250px;
     transition: all 0.3s;
 }
@@ -262,6 +262,7 @@ a {
 
     .top-section, .skills-section, .blogs-section {
         padding: 10px;
+        min-height: calc(100vh - 20px);
     }
 
     .first-container {
@@ -284,8 +285,7 @@ a {
     .item-wrapper {
         padding: 15px 2.5% 15px 2.5%;
         width: 95%;
-
-        height: 40px;
+        height: 100%;
     }
 
     h2 {
@@ -303,8 +303,23 @@ a {
 
     .skill-item {
         background-color: var(--secondary);
-        height: 40px;
+        height: 100%;
         border-radius: 15px;
+    }
+
+    .skill-item > p {
+        display: inline;
+        font-size: 0.75rem;
+        line-height: 1.25rem;
+        margin: 0;
+    }
+
+    #blog-filter * {
+        font-size: 1.25rem;
+    }
+
+    #blog-filter input {
+        width: 70%;
     }
 }
 
