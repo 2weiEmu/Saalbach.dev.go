@@ -12,25 +12,6 @@ import (
 	"text/template"
 )
 
-type RawBlog struct {
-    BlogTitle string;
-    BlogDate string;
-    BlogAuthor string;
-    BlogTopics string;
-    BlogNotes string;
-    BlogContent string;
-}
-
-type BlogHeader struct {
-    BlogTitle string
-    BlogDate string
-    BlogAuthor string
-    BlogDescription string
-    BlogPathname string
-    BlogTopics string
-    BlogNotes string
-}
-
 type BlogItem struct {
     Path string
     Title string 
@@ -41,11 +22,6 @@ type BlogItem struct {
 }
 
 // TODO: make the log.fatals maybe just logs that go into an actual log -> we don't want the site to crash everytime someone messes around
-
-// NOTE: obviously, optimally you would want some kind of blog manifesto where you keep the key information about the blog without neccessarily 
-// loading the whole file - but that A. prob won't happen anyway, because obv you only read what you read, but I would still have to open every 
-// file like this, this would be the obvious optimisation, but I am not gonna do that for now - I will keep it simple (unless if loading times 
-// become too big)
 
 var blogheaders []BlogItem
 
@@ -66,17 +42,13 @@ func GetHeaders() []BlogItem {
 
     // converting the data array to blogItems
     // data is [][]string
-
     for _, line := range data {
-
         var item BlogItem
-
         item.Path = line[0]
         item.Title = line[1]
         item.Author = line[2]
         item.Date = line[3]
         item.Desc = line[4]
-
         for i := 5; i < len(line); i++ {
             item.Tags = append(item.Tags, line[i])
         }
@@ -86,7 +58,6 @@ func GetHeaders() []BlogItem {
 }
 
 func RouteHandler(writer http.ResponseWriter, request *http.Request) {
-
     requestPath := request.URL.Path
     fmt.Println("Request to: ", requestPath)
     
@@ -98,15 +69,12 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         }
         index.Execute(writer, blogheaders)
 
-        // http.ServeFile(writer, request, "src/static/templates/index.html")
-
     // Serving static files
     } else if match, _ := regexp.MatchString("^/((css)|(js))/", requestPath); match {
         fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))
         //http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
-
 
     // Serving any blog
     } else if match, _ := regexp.MatchString("^/blogs/[^/]", requestPath); match {
@@ -124,7 +92,6 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     // Serving the 404 page
     } else {
         http.ServeFile(writer, request, "src/static/templates/404.html")
-
     }
 }
 
