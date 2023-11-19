@@ -78,14 +78,23 @@ a {
     display: inline-block;
     background-color: #000000;
     border-radius: 15px;
-    padding: 6px;
-    width: 50%;
+    padding: 30px;
+    min-width: calc(50% - 60px);
     margin: 0 25% 0 25%;
     user-select: none;
 }
 
-#ascii-art {
-    text-align: center;
+.ascii-art {
+    display: flex;
+    justify-content: space-around;
+}
+
+.ascii-art-image {
+    height: 9rem
+}
+
+.ascii-art-image:hover {
+    filter: brightness(3)
 }
 
 .first-container, .second-container, .third-container {
@@ -94,11 +103,11 @@ a {
 }
 
 .first-container {
-    height: 25vh;
+    min-height: 25vh;
 }
 
 .third-container {
-    height: 25vh;
+    min-height: 25vh;
     width: 100%;
 }
 
@@ -152,7 +161,6 @@ a {
     transition: all 0.3s;
 }
 
-
 .skill-item > p {
     display: none;
     padding: 15px;
@@ -160,25 +168,9 @@ a {
     line-height: 1.75rem;
 }
 
-
 .skill-item > h2 {
     width: calc(100% - 150px);
 }
-
-/*
-.skill-item:hover {
-    height: 100%;
-    transition: all 0.3s;
-}
-*/
-
-
-/*
-.skill-item:hover > p {
-    display: inline;
-    transition-delay: 1s;
-}
-*/
 
 .image-container {
     margin: 0;
@@ -252,3 +244,68 @@ a {
     border-radius: 3px;
     color: var(--secondary);
 }
+
+@media only screen and (max-width: 640px) {
+    .blog-item {
+        width: calc(100%);
+    }
+
+    .ascii-art {
+        flex-direction: column;
+        min-width: unset;
+        align-items: center;
+    }
+
+    .ascii-art-image {
+        height: 90px;
+    }
+
+    .top-section, .skills-section, .blogs-section {
+        padding: 10px;
+    }
+
+    .first-container {
+        min-height: unset;
+    }
+
+    .sub-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .acc-col {
+        padding: 20px 0 0 0;
+    }
+
+    .ps1-prompt {
+        display: none;
+    }
+
+    .item-wrapper {
+        padding: 15px 2.5% 15px 2.5%;
+        width: 95%;
+
+        height: 40px;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .image-container {
+        min-width: 80px;
+    }
+
+    .skill-icon {
+        height: 24px;
+        padding: 8px;
+    }
+
+    .skill-item {
+        background-color: var(--secondary);
+        height: 40px;
+        border-radius: 15px;
+    }
+}
+
+
