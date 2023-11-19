@@ -48,17 +48,118 @@ Click a link
         </div>
         <div class="skills-section" id="skills">
             <h1>Skills & Projects</h1>
+            <!-- TODO: scale down images -->
+            <!-- TODO: maybe make this template based -->
             <div id="skill-list">
-                <div class="skill-item"><img src="/images/goicon.png" class="skill-icon"></div> <!-- TODO: scale down image -->
-                <div class="skill-item"></div>
-                <div class="skill-item"></div>
-                <div class="skill-item"></div>
-                <div class="skill-item"></div>
-                <div class="skill-item"></div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/2weiEmu/quotebook.page" class="text-col">Quotebook.page</a></h2>
+                        <p>A small page that I created for a group of friends in which they should be able to easily save quotes, the backend is written in Go, and uses a simple SQLite3 database. There is also a branch that implements a fancier interface using Javascript (on the front-end not the back-end, the original branch contains no javascript), written by one of the friends.</p>
+                    </div> 
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/2weiEmu/Saalbach.dev.go" class="text-col">Saalbach.dev</a></h2>
+                        <p>A small personal website so that people can find out things about me and you are probably using it right now, at least I'd kind of hope so? The backend is in Go but nothing super special.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/asmicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/knyazer/goosyroad" class="text-col">Goosyroad</a></h2>
+                        <p>A game written for one of my uni courses together with a teammate, that implements a basic 2D crossy-road like game in x86-64 (GAS not Intel Syntax) Assembly using Linux calling conventions and system-calls (i.e. don't run it on Windows).</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/cicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/2weiEmu/Termstop" class="text-col">TermStop</a></h2>
+                        <p>A small project that is simply a terminal stopwatch with some basic flags and things. I wrote it in order to try out some more C programming, experiment with threads and just solidify my C knowledge and even expand it a bit, for example with flag parsing.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/2weiEmu/Robit-Transpiler-Local" class="text-col">Robit Transpiler</a></h2>
+                        <p>The Robit Transpiler is a project that implement the IGCSE Pseudocode (semi-)specifications in order to privde students with an actual working interpreter for a language that is otherwise only Pseudocode and harder to logically check.
+                        (Once again WIP)</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/2weiEmu/sis50.nl" class="text-col">Sis50.nl</a></h2>
+                        <p>A house website for the student house I live at so that we can coordinate cooking, shopping, notices and also look at some nice XKCD comics. Here the backend is in Python, but once again nothing super fancy, except for perhaps the WebSockets involved. (Old and soon to be re-written with Go and a better style)</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
+                        <h2><a href="https://github.com/2weiEmu/GeneticApproachSalesman" class="text-col">Genetic Algorithm (Traveling Salesman)</a></h2>
+                        <p>A project written in Python back in high school in which I constructed a basic genetic algorithm in order to solve the traveling salesman problem. The program is very basic, with a preset "map". There are also quite many optimisations that could be done.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/javaicon.png" class="skill-icon"></div>
+                        <h2><a href="www.lis.school/observer/2021/03/10/lis-at-the-battlecode-hackathon/" class="text-col">Grid Rider Battlecode</a></h2>
+                        <p>Here I participated in a Battlecode hosted by MIT, where we placed in the 80th percentile. Together with a team from my school we wrote a bot in Java in order to defeat our opponents in a scenario setup by the MIT team. We competed in the year 2020.</p>
+                    </div>
+                </div>
             </div>
+
+            <br><br><br><br>
+            <h3 class="text-col">Skills, Specific</h3>
+            <div id="skill-list">
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/javaicon.png" class="skill-icon"></div>
+                        <h2><a href="" class="text-col">University Java Classes (+ Spring)</a></h2>
+                        <p>A description of the project.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/asmicon.png" class="skill-icon"></div>
+                        <h2><a href="" class="text-col">University Assembly Classes (GAS)</a></h2>
+                        <p>A description of the project.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
+                        <h2><a href="" class="text-col">Self-taught Go Programming (wip)</a></h2>
+                        <p>A description of the project.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/tuxicon.png" class="skill-icon"></div>
+                        <h2><a href="" class="text-col">Enthusiastic Linux User</a></h2>
+                        <p>A description of the project.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
+                        <h2><a href="" class="text-col">High-school Python</a></h2>
+                        <p>A description of the project.</p>
+                    </div>
+                </div>
+                <div class="item-wrapper">
+                    <div class="skill-item">
+                        <div class="image-container"><img src="/images/nvimicon.png" class="skill-icon"></div>
+                        <h2><a href="" class="text-col">Enthusiastic Neovim User</a></h2>
+                        <p>A description of the project.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="blogs-section" id="blogs">
-
+            <h1>Blogs</h1>
         </div>
     </body>
 
