@@ -103,9 +103,7 @@ func httpRedirect(w http.ResponseWriter, req *http.Request) {
     }
     log.Printf("redirect to: %s", target)
     http.Redirect(w, req, target, http.StatusPermanentRedirect)
-
 }
-
 
 func main() {
     fmt.Println("Received Arguments:", os.Args)
