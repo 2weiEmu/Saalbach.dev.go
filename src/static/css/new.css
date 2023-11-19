@@ -118,6 +118,8 @@ a {
 .item-wrapper {
     padding: 15px 2.5% 15px 2.5%;
     width: 45%;
+
+    height: 64px;
     transition: all 0.3s;
 }
 
@@ -130,14 +132,20 @@ a {
     transition: all 0.3s;
 }
 
-.skill-item > h2 {
-    width: calc(100% - 150px);
+.item-wrapper:hover > .skill-item > p {
+    display: inline;
 }
 
-.skill-item:hover {
+.item-wrapper:hover {
+    height: 250px;
+    transition: all 0.3s;
+}
+
+.item-wrapper:hover > .skill-item {
     height: 100%;
     transition: all 0.3s;
 }
+
 
 .skill-item > p {
     display: none;
@@ -146,10 +154,25 @@ a {
     line-height: 1.75rem;
 }
 
+
+.skill-item > h2 {
+    width: calc(100% - 150px);
+}
+
+/*
+.skill-item:hover {
+    height: 100%;
+    transition: all 0.3s;
+}
+*/
+
+
+/*
 .skill-item:hover > p {
     display: inline;
     transition-delay: 1s;
 }
+*/
 
 .image-container {
     margin: 0;
