@@ -9,6 +9,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"text/template"
 )
 
@@ -19,9 +20,8 @@ type BlogItem struct {
     Author string
     Date string
     Desc string
+    Content string
 }
-
-// TODO: make the log.fatals maybe just logs that go into an actual log -> we don't want the site to crash everytime someone messes around
 
 var blogheaders []BlogItem
 
@@ -61,6 +61,16 @@ func GetHeaders(filter string) []BlogItem {
     return result
 }
 
+func LoadContentFromPath(path string) string {
+    c, err := os.ReadFile("src/static/blogs/" + path + ".html")
+    if err != nil {
+        // TODO:
+    }
+
+    return string(c)
+
+}
+
 func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     requestPath := request.URL.Path
     fmt.Println("Request to: ", requestPath)
@@ -70,7 +80,6 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     // Serving the main page
     if requestPath == "/" {
         blogheaders = GetHeaders(titleFilter)
-
         index, err := template.ParseFiles("src/static/templates/index.html")
         if err != nil {
             // TODO:
@@ -79,20 +88,33 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
     // Serving static files
     } else if match, _ := regexp.MatchString("^/((css)|(js))/", requestPath); match {
-        fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))
-        //http.StripPrefix("static/", fs)
         fs.ServeHTTP(writer, request)
 
     // Serving any blog
     } else if match, _ := regexp.MatchString("^/blogs/[^/]", requestPath); match {
-        fs := http.FileServer(http.Dir("src/static/"))
-        fs.ServeHTTP(writer, request)
+        blog, err := template.ParseFiles("src/static/templates/blog.html")
+        if err != nil {
+            // TODO:
+        }
+
+        path, _ := strings.CutPrefix(requestPath, "/blogs/")
+        content := LoadContentFromPath(path)
+
+        var finalHeader BlogItem
+        blogheaders := GetHeaders("")
+        for _, header := range blogheaders {
+            if header.Path == path {
+                finalHeader = header
+            }
+        }
+
+        finalHeader.Content = content
+
+        blog.Execute(writer, finalHeader)
 
     // Serving any images
     } else if match, _ := regexp.MatchString("^/images/", requestPath); match {
-        // TODO: if statement can be improved
-        fmt.Println("Serving Static File...")
         fs := http.FileServer(http.Dir("src/static"))
         http.StripPrefix("/static", fs)
         fs.ServeHTTP(writer, request)
@@ -114,8 +136,6 @@ func httpRedirect(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-    fmt.Println("Received Arguments:", os.Args)
-
     /**
      * NOTE: New Format: ./main [-d] [-p PORT_NUMBER] [-c CERT_LOCATION] [-k KEY_LOCATION]
      *                   -d is deploy flag

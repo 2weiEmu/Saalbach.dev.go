@@ -1,0 +1,18 @@
+:root {
+    --text: #ffffff; 
+    --background: #0f0f0f; 
+    --primary: #a19991; 
+    --secondary: #151919; 
+    --accent: #737d87;
+}
+
+@font-face {
+    font-family: FiraCode;
+    src: url("/css/fonts/FiraCode-Regular.ttf");
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Fira Code', FiraCode, monospace; /* TODO: add font file */
+}

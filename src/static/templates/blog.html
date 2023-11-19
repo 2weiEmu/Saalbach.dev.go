@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+
+<html>
+
+    <head>
+        <link href="/css/blog.css?version=4.1" rel="stylesheet" type="text/css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+        <h1>{{ .Title }}</h1>
+        <h3>By {{ .Author }} · <a href="/">Home</a> · <a href="">RSS</a>
+            {{ range .Tags }}
+            · {{ . }}
+            {{ end }}
+        </h3>
+    </head>
+
+    <body>
+        <p>{{ .Date }}</p>
+        {{ .Content }}
+    </body>
+
+    <footer>
+        <a>LinkedIn</a>
+        <a>GitHub</a>
+        <a>Email</a>
+        <a>Curriculum Vitae</a>
+        <a>RSS</a>
+    </footer>
+
+</html>
