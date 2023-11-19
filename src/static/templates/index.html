@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 
 
 <html>
@@ -117,28 +117,28 @@ Click a link
                     <div class="skill-item">
                         <div class="image-container"><img src="/images/javaicon.png" class="skill-icon"></div>
                         <h2><a href="" class="text-col">University Java Classes (+ Spring)</a></h2>
-                        <p>A description of the project.</p>
+                        <p>As part of my university courses at TU Delft we have been completing projects (also in groups) in Java. Also using Springboot in order to provide network-connectivity.</p>
                     </div>
                 </div>
                 <div class="item-wrapper">
                     <div class="skill-item">
                         <div class="image-container"><img src="/images/asmicon.png" class="skill-icon"></div>
                         <h2><a href="" class="text-col">University Assembly Classes (GAS)</a></h2>
-                        <p>A description of the project.</p>
+                        <p>During a university class in the first quarter of my first year at TU Delft there was classes covering GAS-Syntax x86-64assembly providing multiple challenging assignments in order to prove your understanding of assembly and low-level functions of a computer.</p>
                     </div>
                 </div>
                 <div class="item-wrapper">
                     <div class="skill-item">
                         <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
                         <h2><a href="" class="text-col">Self-taught Go Programming (wip)</a></h2>
-                        <p>A description of the project.</p>
+                        <p>Go is an efficient, modern and good utility language that can be used for multiple applications, such as web services. (And is also able to provide performance). Therefore I made the decision to attempt multiple projects, slowly and steadily increasing my ability with the language, so that I have it in my toolbelt.</p>
                     </div>
                 </div>
                 <div class="item-wrapper">
                     <div class="skill-item">
                         <div class="image-container"><img src="/images/tuxicon.png" class="skill-icon"></div>
                         <h2><a href="" class="text-col">Enthusiastic Linux User</a></h2>
-                        <p>A description of the project.</p>
+                        <p></p>
                     </div>
                 </div>
                 <div class="item-wrapper">
@@ -160,7 +160,27 @@ Click a link
         </div>
         <div class="blogs-section" id="blogs">
             <h1>Blogs</h1>
+
+            <div id="blog-filter">
+                <input placeholder="Search for title..."></input>
+                <button>Search</button>
+            </div>
+
+            <div class="blog-list">
+                {{ range . }}
+                <div class="blog-item">
+                    <h3 class="text-col"><a href="/blogs/{{ .Path }}" class="text-col">{{ .Title }}</a></h3>
+                    <div class="tag-list">
+                        {{ range .Tags }}
+                            <div class="tag">{{ . }}</div>
+                        {{ end }}
+                    </div>
+                    <p>By: {{ .Author }}</p>
+                    <p>Release Date: {{ .Date }}</p>
+                    <p>{{ .Desc }}</p>
+                </div>
+                {{ end }}
+            </div>
         </div>
     </body>
-
 </html>

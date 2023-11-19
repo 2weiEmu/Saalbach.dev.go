@@ -76,6 +76,7 @@ a {
     padding: 6px;
     width: 50%;
     margin: 0 25% 0 25%;
+    user-select: none;
 }
 
 #ascii-art {
@@ -88,11 +89,11 @@ a {
 }
 
 .first-container {
-    height: 25%;
+    height: 25vh;
 }
 
 .third-container {
-    height: 25%;
+    height: 25vh;
     width: 100%;
 }
 
@@ -185,4 +186,64 @@ a {
 .skill-icon {
     height: 48px;
     padding: 8px;
+}
+
+#blog-filter {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+#blog-filter * {
+    font-size: 1.75rem;
+    padding: 12px;
+}
+
+#blog-filter button {
+    border-radius: 0 15px 15px 0;
+    outline: 0;
+    border: none;
+    border-left: 8px solid var(--background);
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+#blog-filter input {
+    width: 50%;
+    border: none;
+    outline: none;
+    background-color: var(--secondary);
+    border-radius: 15px 0 0 15px;
+    color: var(--text);
+}
+
+.blog-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.blog-item {
+    width: calc((100% / 3) - 50px);
+    margin: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--secondary);
+    min-height: 100px;
+}
+
+.blog-item > h3 {
+    padding-bottom: 10px;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-list > .tag {
+    background-color: lightblue;
+    padding: 5px;
+    margin: 0 8px 0 0;
+    border-radius: 3px;
+    color: var(--secondary);
 }

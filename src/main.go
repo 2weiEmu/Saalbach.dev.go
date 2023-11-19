@@ -1,26 +1,15 @@
 package main
 
 import (
-	"crypto/sha1"
-	"database/sql"
-	"encoding/hex"
+	"encoding/csv"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
 	"strconv"
-	"strings"
 	"text/template"
-
-	"github.com/mattn/go-sqlite3"
-)
-
-var (
-    db *sql.DB 
-    sqlite3Conn sqlite3.SQLiteConn
-    fetchBlogStatement *sql.Stmt 
-    searchBlogsStatement *sql.Stmt
 )
 
 type RawBlog struct {
@@ -42,6 +31,15 @@ type BlogHeader struct {
     BlogNotes string
 }
 
+type BlogItem struct {
+    Path string
+    Title string 
+    Tags []string
+    Author string
+    Date string
+    Desc string
+}
+
 // TODO: make the log.fatals maybe just logs that go into an actual log -> we don't want the site to crash everytime someone messes around
 
 // NOTE: obviously, optimally you would want some kind of blog manifesto where you keep the key information about the blog without neccessarily 
@@ -49,113 +47,58 @@ type BlogHeader struct {
 // file like this, this would be the obvious optimisation, but I am not gonna do that for now - I will keep it simple (unless if loading times 
 // become too big)
 
-func GetAllBlogHeaders(statement *sql.Stmt, titleFilter string) []BlogHeader {
+var blogheaders []BlogItem
 
-    rows, err := statement.Query("%" + titleFilter + "%")
-    defer rows.Close()
-
-    if err != nil {
-        fmt.Println("Prepared statement failed to execute with error:", err)
-    }
-
-    var blogHeaders []BlogHeader;
-
-    for rows.Next() {
-
-        var header BlogHeader;
-        err = rows.Scan(
-            &header.BlogTitle, &header.BlogDate, &header.BlogAuthor, 
-            &header.BlogDescription, &header.BlogPathname, &header.BlogTopics, 
-            &header.BlogNotes,
-            )
-
-        if err != nil {
-            fmt.Println("Failed to retrieve row:", rows, "With the error:", err)
-            return nil
-        }
-
-        header.BlogDate = strings.TrimSuffix(header.BlogDate, "T00:00:00Z")
-        blogHeaders = append(blogHeaders, header)
-
-    }
+func GetHeaders() []BlogItem {
+    var result []BlogItem
     
+    f, err := os.Open("src/bloghead.csv")
+    if err != nil {
+        // TODO:
+    }
+    defer f.Close()
 
-    return blogHeaders
-
-}
-
-func GetBlogUsingPathname(statement *sql.Stmt, pathname string) RawBlog {
-
-    rows, err := statement.Query(pathname)
-
-    defer rows.Close()
-
+    csvReader := csv.NewReader(f)
+    data, err := csvReader.ReadAll()
     if err != nil {
         // TODO:
     }
 
-    var rawBlog RawBlog
+    // converting the data array to blogItems
+    // data is [][]string
 
-    rows.Next();
+    for _, line := range data {
 
-    err = rows.Scan(
-        &rawBlog.BlogTitle, &rawBlog.BlogDate, &rawBlog.BlogAuthor,
-        &rawBlog.BlogTopics, &rawBlog.BlogNotes, &rawBlog.BlogContent,
-        )
+        var item BlogItem
 
-    if err != nil {
-        // TODO:
+        item.Path = line[0]
+        item.Title = line[1]
+        item.Author = line[2]
+        item.Date = line[3]
+        item.Desc = line[4]
+
+        for i := 5; i < len(line); i++ {
+            item.Tags = append(item.Tags, line[i])
+        }
+        result = append(result, item)
     }
-    rawBlog.BlogDate = strings.TrimSuffix(rawBlog.BlogDate, "T00:00:00Z")
-
-    return rawBlog
-
-
-}
-
-func hashUser(addr string) string {
-    h := sha1.New();
-    h.Write([]byte(addr))
-    return hex.EncodeToString(h.Sum(nil))
-}
-
-func WriteNewUserOrIncrement(userHash string, visitPath string) {
-    row := db.QueryRow(`SELECT visitRoute FROM visit_routes WHERE visitRoute = ?`, visitPath)
-
-    var temp string
-    err := row.Scan(&temp)
-
-    if err == sql.ErrNoRows {
-        // have to insert the user
-        db.Exec(`INSERT INTO visit_routes (visitRoute, visitCount) VALUES ( ? , 1)`, visitPath)
-        fmt.Println("New Route")
-
-    } else if err != nil {
-        // some other error has occured
-        // TODO:
-        fmt.Println("Some other error", err)
-
-    } else {
-        // increment the found user count by 1
-        db.Exec(`UPDATE visit_routes SET visitCount = visitCount + 1 WHERE visitRoute = ?`, visitPath)
-        fmt.Println("Incremented Path")
-
-    }
+    return result
 }
 
 func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
     requestPath := request.URL.Path
-
-    requestIPHash := hashUser(strings.Split(request.RemoteAddr, ":")[0])
-
     fmt.Println("Request to: ", requestPath)
     
     // Serving the main page
     if requestPath == "/" {
-        http.ServeFile(writer, request, "src/static/templates/index.html")
-        WriteNewUserOrIncrement(requestIPHash, "/")
+        index, err := template.ParseFiles("src/static/templates/index.html")
+        if err != nil {
+            // TODO:
+        }
+        index.Execute(writer, blogheaders)
 
+        // http.ServeFile(writer, request, "src/static/templates/index.html")
 
     // Serving static files
     } else if match, _ := regexp.MatchString("^/((css)|(js))/", requestPath); match {
@@ -166,20 +109,9 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
 
 
     // Serving any blog
-    } else if match, _ := regexp.MatchString("^/blogs/", requestPath); match {
-        fmt.Println("Serving blog...")
-
-        // getting the blog article, so that it may be inserted into the template
-        blogArticle := GetBlogUsingPathname(fetchBlogStatement, strings.Split(requestPath, "/")[2])
-
-        blogTemplate, err := template.ParseFiles("src/static/templates/blog-article.html")
-        if err != nil {
-           log.Fatal(err)
-        }
-
-        blogTemplate.Execute(writer, blogArticle)
-        WriteNewUserOrIncrement(requestIPHash, requestPath)
-
+    } else if match, _ := regexp.MatchString("^/blogs/[^/]", requestPath); match {
+        fs := http.FileServer(http.Dir("src/static/"))
+        fs.ServeHTTP(writer, request)
 
     // Serving any images
     } else if match, _ := regexp.MatchString("^/images/", requestPath); match {
@@ -189,51 +121,9 @@ func RouteHandler(writer http.ResponseWriter, request *http.Request) {
         http.StripPrefix("/static", fs)
         fs.ServeHTTP(writer, request)
 
-
-    // Serving the about, contact or projects page
-    } else if requestPath == "/about" || requestPath == "/contact" || requestPath == "/projects" {
-        http.ServeFile(writer, request, "src/static/templates" + requestPath + ".html")
-        WriteNewUserOrIncrement(requestIPHash, requestPath)
-
-
-    // Serving the main blogs page
-    } else if requestPath == "/blog" {
-        // NOTE: strategy for loading search... simply don't include the things that don't match.... yes very fun.
-        // TODO: make it so that on page reload it empties the search params (perhaps requires more javascript)
-        
-        fmt.Println("filtering blogs")
-
-        searchParams := request.URL.Query()
-        search := ""
-
-        if searchParams.Has("search") {
-            search = searchParams["search"][0]
-        }
-
-        var filteredBlogs []BlogHeader
-        filteredBlogs = GetAllBlogHeaders(searchBlogsStatement, search)
-
-        fmt.Println("filteredBlogs for blog page:", filteredBlogs)
-
-        blogPage, err := template.ParseFiles("src/static/templates/blog.html")
-
-        if err != nil {
-            log.Fatal(err)
-        }
-
-        err = blogPage.Execute(writer, filteredBlogs)
-
-        if err != nil {
-            log.Fatal(err)
-        }
-        WriteNewUserOrIncrement(requestIPHash, requestPath)
-
-
     // Serving the 404 page
     } else {
         http.ServeFile(writer, request, "src/static/templates/404.html")
-        WriteNewUserOrIncrement(requestIPHash, requestPath)
-
 
     }
 }
@@ -251,92 +141,34 @@ func httpRedirect(w http.ResponseWriter, req *http.Request) {
 
 
 func main() {
-
     fmt.Println("Received Arguments:", os.Args)
+    blogheaders = GetHeaders()
 
-    /*
-     * NOTE: Recommended format for easily launching
-     * ./main deploy|test [port number] [certificate location] [private key location]
-     * TODO: make this use the flags package that go has available
+    /**
+     * NOTE: New Format: ./main [-d] [-p PORT_NUMBER] [-c CERT_LOCATION] [-k KEY_LOCATION]
+     *                   -d is deploy flag
      */
-
-    // default values for flags
-    deployType := "test"
-    port := ""
-    certificate := ""
-    privateKey := ""
-
-    recommendedFormat := "./main deploy|test [port number] [certificate location] [private key location]"
-    osArgsLen := len(os.Args) 
+    port := strconv.Itoa(*flag.Int("p", 8000, "Choose Port Number"))
+    deploy := *flag.Bool("d", false, "Choose if you are deploying")
+    cert := *flag.String("c", "", "State the certificate location")
+    secret := *flag.String("k", "", "State the private key location")
+    flag.Parse()
 
     // must give deploy or test - otherwise invalid
-    if osArgsLen >= 2 {
-        if os.Args[1] == "deploy" || os.Args[1] == "test" {
-            deployType = os.Args[1]
-        } else {
-            fmt.Println("Invalid deploy type given:\n", recommendedFormat)
-            os.Exit(1)
-        }
-    } else {
-        fmt.Println("Too few arguments given:\n", recommendedFormat)
-        os.Exit(1)
-    }
-
-    if osArgsLen < 3 {
-        fmt.Println("No port number given, defaulting to port 8000.\n", recommendedFormat)
-    } else {
-        _, err := strconv.Atoi(os.Args[2])
-
-        port = os.Args[2]
-
-        if err != nil {
-            fmt.Println("Given port number is not valid:\n", recommendedFormat)
-            os.Exit(1)
-        }
-    }
-
     http.HandleFunc("/", RouteHandler)
     fmt.Println("Server is almost ready.")
 
     var err error
-    db, err = sql.Open("sqlite3", "file:./src/blog-database?cache=shared")
 
-    defer db.Close()
+    if !deploy {
+        err = http.ListenAndServe(":" + port, nil)
+    } else {
+        go http.ListenAndServe(":80", http.HandlerFunc(httpRedirect))
+        err = http.ListenAndServeTLS(":" + port, cert, secret, nil)
+    }
 
     if err != nil {
         // TODO:
-        log.Fatal("failed to open db with error ", err)
-    }
-
-    if err = db.Ping(); err != nil {
-        log.Fatal("failed to ping db with error ", err)
-    }
-
-    fetchBlogStatement, err = db.Prepare(`SELECT blogtitle, blogdate, blogauthor, blogtopics, blognotes, blogcontent FROM blogs WHERE blogpathname = ?`)
-    searchBlogsStatement, err = db.Prepare(`SELECT blogtitle, blogdate, blogauthor, blogdescription, blogpathname, blogtopics, blognotes FROM blogs WHERE blogtitle LIKE ?`)
-
-    defer fetchBlogStatement.Close()
-    defer searchBlogsStatement.Close()
-
-    if deployType == "test" {
-        err = http.ListenAndServe(":" + port, nil)
-    } else {
-        
-        if osArgsLen < 5 { 
-            fmt.Println("Either a certificate or private key path was not given.\n", recommendedFormat)
-            os.Exit(1)
-        }
-
-        certificate = os.Args[3]
-        privateKey = os.Args[4]
-
-        go http.ListenAndServe(":80", http.HandlerFunc(httpRedirect))
-
-        err = http.ListenAndServeTLS(":" + port, certificate, privateKey, nil)
-    }
-
-    if err != nil {
-        fmt.Println(err)
     }
 }
 
