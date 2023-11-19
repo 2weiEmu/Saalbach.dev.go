@@ -25,7 +25,7 @@ type BlogItem struct {
 
 var blogheaders []BlogItem
 
-func GetHeaders() []BlogItem {
+func GetHeaders(filter string) []BlogItem {
     var result []BlogItem
     
     f, err := os.Open("src/bloghead.csv")
@@ -43,16 +43,20 @@ func GetHeaders() []BlogItem {
     // converting the data array to blogItems
     // data is [][]string
     for _, line := range data {
-        var item BlogItem
-        item.Path = line[0]
-        item.Title = line[1]
-        item.Author = line[2]
-        item.Date = line[3]
-        item.Desc = line[4]
-        for i := 5; i < len(line); i++ {
-            item.Tags = append(item.Tags, line[i])
+        
+        if m, _ := regexp.MatchString(filter, line[1]); m {
+            var item BlogItem
+            item.Path = line[0]
+            item.Title = line[1]
+            item.Author = line[2]
+            item.Date = line[3]
+            item.Desc = line[4]
+            for i := 5; i < len(line); i++ {
+                item.Tags = append(item.Tags, line[i])
+            }
+            result = append(result, item)
         }
-        result = append(result, item)
+
     }
     return result
 }
@@ -60,9 +64,13 @@ func GetHeaders() []BlogItem {
 func RouteHandler(writer http.ResponseWriter, request *http.Request) {
     requestPath := request.URL.Path
     fmt.Println("Request to: ", requestPath)
+
+    titleFilter := request.URL.Query().Get("blogfilter")
     
     // Serving the main page
     if requestPath == "/" {
+        blogheaders = GetHeaders(titleFilter)
+
         index, err := template.ParseFiles("src/static/templates/index.html")
         if err != nil {
             // TODO:
@@ -107,7 +115,6 @@ func httpRedirect(w http.ResponseWriter, req *http.Request) {
 
 func main() {
     fmt.Println("Received Arguments:", os.Args)
-    blogheaders = GetHeaders()
 
     /**
      * NOTE: New Format: ./main [-d] [-p PORT_NUMBER] [-c CERT_LOCATION] [-k KEY_LOCATION]

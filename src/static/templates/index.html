@@ -104,14 +104,14 @@
                 <div class="item-wrapper">
                     <div class="skill-item">
                         <div class="image-container"><img src="/images/javaicon.png" class="skill-icon"></div>
-                        <h2><a href="" class="text-col">University Java Classes (+ Spring)</a></h2>
+                        <h2><a href="/blogs/my-uni" class="text-col">University Java Classes (+ Spring)</a></h2>
                         <p>As part of my university courses at TU Delft we have been completing projects (also in groups) in Java. Also using Springboot in order to provide network-connectivity.</p>
                     </div>
                 </div>
                 <div class="item-wrapper">
                     <div class="skill-item">
                         <div class="image-container"><img src="/images/asmicon.png" class="skill-icon"></div>
-                        <h2><a href="" class="text-col">University Assembly Classes (GAS)</a></h2>
+                        <h2><a href="/blogs/my-uni" class="text-col">University Assembly Classes (GAS)</a></h2>
                         <p>During a university class in the first quarter of my first year at TU Delft there was classes covering GAS-Syntax x86-64assembly providing multiple challenging assignments in order to prove your understanding of assembly and low-level functions of a computer.</p>
                     </div>
                 </div>
@@ -149,10 +149,10 @@
         <div class="blogs-section" id="blogs">
             <h1>Blogs</h1>
 
-            <div id="blog-filter">
-                <input placeholder="Search for title..."></input>
-                <button>Search</button>
-            </div>
+            <form action="#blogs" id="blog-filter">
+                <input name="blogfilter" placeholder="Search for title..."></input>
+                <button type="submit">Search</button>
+            </form>
 
             <div class="blog-list">
                 {{ range . }}
