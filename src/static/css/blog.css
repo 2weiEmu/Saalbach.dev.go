@@ -59,7 +59,7 @@ a {
     color: var(--primary);
 }
 
-p {
+p, li {
     color: var(--text-par);
 }
 
@@ -67,11 +67,41 @@ p {
     color: var(--primary);
 }
 
+
 .content-body {
     width: 55%;
-    min-width: 400px;
+    min-width: 990px;
     margin: 50px 22.5% 0 22.5%;
+}
 
+/* Thank you to golden ratio typography */
+.content-body p, .content-body a, .content-body h1, .content-body h2, .content-body h3, .content-body li {
+    font-family: "Helvetica", sans-serif;
+}
+
+.content-body p, .content-body a, .content-body li { 
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.content-body h1 {
+    font-size: 42px;
+    line-height: 49px;
+}
+
+.content-body h2 {
+    font-size: 33px;
+    line-height: 49px;
+}
+
+.content-body h3 {
+    font-size: 26px;
+    line-height: 49px;
+}
+
+.content-body h4 {
+    font-size: 20px;
+    line-height: 49px;
 }
 
 @media only screen and (max-width: 640px) {
