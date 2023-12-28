@@ -26,7 +26,10 @@ func main() {
     r.HandleFunc("/css/{style}", CSSHandler)
     r.HandleFunc("/images/{image}", ImagesHandler)
     r.HandleFunc("/blogs/{blog}", BlogHandler)
-    r.HandleFunc("/", MainHandler)
+    r.HandleFunc("/{page}", MainHandler)
+    r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
+        http.ServeFile(writer, request, "src/static/templates/index.html")
+    })
     http.Handle("/", r)
 
     fmt.Println("Server is almost ready.")
@@ -62,5 +65,7 @@ func ImagesHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func MainHandler(writer http.ResponseWriter, request *http.Request) {
-
+    vars := mux.Vars(request)
+    page := vars["page"]
+    http.ServeFile(writer, request, "src/static/templates/" + page);
 }

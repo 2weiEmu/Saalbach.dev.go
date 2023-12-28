@@ -1,0 +1,47 @@
+:root {
+	--bg: #131316;
+	--fg: #f0f0f0;
+	--ac: #de935f;
+}
+
+body {
+	background-color: var(--bg);
+	margin: 0;
+	padding: 0;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+#page-header {
+	display: flex;
+	column-gap: 30px;
+	border-bottom: 2px solid var(--ac);
+	padding: 0 2.5% 0% 2.5%;
+	color: var(--fg);
+}
+
+#page-header a {
+	font-size: 1.5rem;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+#content {
+	padding: 2.5% 15% 0% 15%;
+}
+
+#content p {
+	line-height: 39px;
+	font-size: 20px;
+}
+
+h1 {
+	font-size: 3rem;
+}
+
+h2 {
+	font-size: 2.33rem;
+}
+
+h3 {
+	font-size: 2rem;
+}

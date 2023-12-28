@@ -2,174 +2,24 @@
 
 
 <html>
-    
-    <head>
-        <link href="/css/new.css?version=4.1" rel="stylesheet" type="text/css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    </head>
 
+	<head>
+		<link href="/css/index.css" type="text/css" rel="stylesheet">
+		<title>Home</title>
+	</head>
 
-    <body>
-        <div class="top-section">
-            <div class="first-container">
-                <h1>Robert Arno Saalbach</h1>
-                <h3>2weiEmu · ZweiEmu · <a href="">CV</a> · <a href="">RSS</a></h3>
-            </div>
+	<body>
+		<div id="page-header">
+			<h1>Saalbach.dev</h1>
+			<a>About</a>
+			<a>Blog</a>
+			<a>Contact</a>
+			<a>RSS</a>
+		</div>
+		<div id="content">
+			<h1>Robert Arno Saalbach</h1>
+			<p>Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.</p>
+		</div>
+	</body>
 
-            <div class="second-container">
-            <div class="code-window">
-                <pre class="text-col ps1-prompt">
-<span class="pri-col"> [ robert@saalbach.dev ~/ ] $ </span>./show-links.sh
-</pre>
-            <div class="ascii-art">
-                        <a href="https://www.linkedin.com/in/robert-saalbach-418414203/"><img class="ascii-art-image" src="/images/linkedin-ascii.png"></a>
-                        <a href="https://github.com/2weiEmu"><img class="ascii-art-image" src="/images/github-ascii.png"></a>
-                        <a href="mailto:robert@saalbach.dev"><img class="ascii-art-image" src="/images/email-ascii.png"></a>
-            </div>
-            </div>
-            </div>
-            <div class="sec-header sub-links third-container">
-                <a class="acc-col" href="#skills">Skills & Projects</a>
-                <a class="acc-col" href="#blogs">Blogs</a>
-                <a class="acc-col" href="">Curriculum Vitae</a>
-            </div>
-        </div>
-        <div class="skills-section" id="skills">
-            <h1>Skills & Projects</h1>
-            <h3>(Click to reveal)</h3>
-            <!-- TODO: scale down images -->
-            <!-- TODO: maybe make this template based -->
-            <div id="skill-list">
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/2weiEmu/quotebook.page" class="text-col">Quotebook.page</a></h2>
-                        <p>A small page that I created for a group of friends in which they should be able to easily save quotes, the backend is written in Go, and uses a simple SQLite3 database. There is also a branch that implements a fancier interface using Javascript (on the front-end not the back-end, the original branch contains no javascript), written by one of the friends.</p>
-                    </div> 
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/2weiEmu/Saalbach.dev.go" class="text-col">Saalbach.dev</a></h2>
-                        <p>A small personal website so that people can find out things about me and you are probably using it right now, at least I'd kind of hope so? The backend is in Go but nothing super special.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/asmicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/knyazer/goosyroad" class="text-col">Goosyroad</a></h2>
-                        <p>A game written for one of my uni courses together with a teammate, that implements a basic 2D crossy-road like game in x86-64 (GAS not Intel Syntax) Assembly using Linux calling conventions and system-calls (i.e. don't run it on Windows).</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/cicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/2weiEmu/Termstop" class="text-col">TermStop</a></h2>
-                        <p>A small project that is simply a terminal stopwatch with some basic flags and things. I wrote it in order to try out some more C programming, experiment with threads and just solidify my C knowledge and even expand it a bit, for example with flag parsing.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/2weiEmu/Robit-Transpiler-Local" class="text-col">Robit Transpiler</a></h2>
-                        <p>The Robit Transpiler is a project that implement the IGCSE Pseudocode (semi-)specifications in order to privde students with an actual working interpreter for a language that is otherwise only Pseudocode and harder to logically check.
-                        (Once again WIP)</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/2weiEmu/sis50.nl" class="text-col">Sis50.nl</a></h2>
-                        <p>A house website for the student house I live at so that we can coordinate cooking, shopping, notices and also look at some nice XKCD comics. Here the backend is in Python, but once again nothing super fancy, except for perhaps the WebSockets involved. (Old and soon to be re-written with Go and a better style)</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
-                        <h2><a href="https://github.com/2weiEmu/GeneticApproachSalesman" class="text-col">Genetic Algorithm (Traveling Salesman)</a></h2>
-                        <p>A project written in Python back in high school in which I constructed a basic genetic algorithm in order to solve the traveling salesman problem. The program is very basic, with a preset "map". There are also quite many optimisations that could be done.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/javaicon.png" class="skill-icon"></div>
-                        <h2><a href="www.lis.school/observer/2021/03/10/lis-at-the-battlecode-hackathon/" class="text-col">Grid Rider Battlecode</a></h2>
-                        <p>Here I participated in a Battlecode hosted by MIT, where we placed in the 80th percentile. Together with a team from my school we wrote a bot in Java in order to defeat our opponents in a scenario setup by the MIT team. We competed in the year 2020.</p>
-                    </div>
-                </div>
-            </div>
-
-            <br><br><br><br>
-            <h3 class="text-col">Skills, Specific</h3>
-            <div id="skill-list">
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/javaicon.png" class="skill-icon"></div>
-                        <h2><a href="/blogs/my-uni" class="text-col">University Java Classes (+ Spring)</a></h2>
-                        <p>As part of my university courses at TU Delft we have been completing projects (also in groups) in Java. Also using Springboot in order to provide network-connectivity.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/asmicon.png" class="skill-icon"></div>
-                        <h2><a href="/blogs/my-uni" class="text-col">University Assembly Classes (GAS)</a></h2>
-                        <p>During a university class in the first quarter of my first year at TU Delft there was classes covering GAS-Syntax x86-64assembly providing multiple challenging assignments in order to prove your understanding of assembly and low-level functions of a computer.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/goicon.png" class="skill-icon"></div>
-                        <h2><a href="" class="text-col">Self-taught Go Programming (wip)</a></h2>
-                        <p>Go is an efficient, modern and good utility language that can be used for multiple applications, such as web services. (And is also able to provide performance). Therefore I made the decision to attempt multiple projects, slowly and steadily increasing my ability with the language, so that I have it in my toolbelt.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/tuxicon.png" class="skill-icon"></div>
-                        <h2><a href="" class="text-col">Enthusiastic Linux User</a></h2>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/pyicon.png" class="skill-icon"></div>
-                        <h2><a href="" class="text-col">High-school Python</a></h2>
-                        <p>A description of the project.</p>
-                    </div>
-                </div>
-                <div class="item-wrapper">
-                    <div class="skill-item">
-                        <div class="image-container"><img src="/images/nvimicon.png" class="skill-icon"></div>
-                        <h2><a href="" class="text-col">Enthusiastic Neovim User</a></h2>
-                        <p>A description of the project.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="blogs-section" id="blogs">
-            <h1>Blogs</h1>
-
-            <form action="#blogs" id="blog-filter">
-                <input name="blogfilter" placeholder="Search for title..."></input>
-                <button type="submit">Search</button>
-            </form>
-
-            <div class="blog-list">
-                {{ range . }}
-                <div class="blog-item">
-                    <h3 class="text-col"><a href="/blogs/{{ .Path }}" class="text-col">{{ .Title }}</a></h3>
-                    <div class="tag-list">
-                        {{ range .Tags }}
-                            <div class="tag">{{ . }}</div>
-                        {{ end }}
-                    </div>
-                    <p>By: {{ .Author }}</p>
-                    <p>Release Date: {{ .Date }}</p>
-                    <p>{{ .Desc }}</p>
-                </div>
-                {{ end }}
-            </div>
-        </div>
-    </body>
 </html>
