@@ -12,8 +12,7 @@ body {
 }
 
 a {
-	color: var(--fg);
-	text-decoration: none;
+	color: var(--ac);
 }
 
 #page-header {
@@ -28,10 +27,12 @@ a {
 	font-size: 1.5rem;
 	margin-top: auto;
 	margin-bottom: auto;
+	color: var(--fg);
+	text-decoration: none;
 }
 
 #content {
-	padding: 2.5% 15% 0% 15%;
+	padding: 4% 15% 0% 15%;
 }
 
 #content p {
@@ -49,4 +50,20 @@ h2 {
 
 h3 {
 	font-size: 2rem;
+}
+
+.banner p {
+	margin-top: 0;
+	text-align: center;
+}
+
+.banner h2 {
+	margin-bottom: 0;
+	text-align: center;
+}
+
+.hi-start {
+	font-size: 3rem;
+	font-weight: bold;
+	padding: 0 10px 0 10px;
 }
