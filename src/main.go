@@ -57,7 +57,7 @@ func CSSHandler(writer http.ResponseWriter, request *http.Request) {
 func BlogHandler(writer http.ResponseWriter, request *http.Request) {
     vars := mux.Vars(request)
     blog := vars["blog"]
-    http.ServeFile(writer, request, "src/static/blogs/" + blog);
+    http.ServeFile(writer, request, "src/static/blogs/" + blog + ".html");
 }
 
 func ImagesHandler(writer http.ResponseWriter, request *http.Request) {
@@ -67,5 +67,5 @@ func ImagesHandler(writer http.ResponseWriter, request *http.Request) {
 func MainHandler(writer http.ResponseWriter, request *http.Request) {
     vars := mux.Vars(request)
     page := vars["page"]
-    http.ServeFile(writer, request, "src/static/templates/" + page);
+    http.ServeFile(writer, request, "src/static/templates/" + page + ".html");
 }
