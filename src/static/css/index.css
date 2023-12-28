@@ -11,6 +11,11 @@ body {
 	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+a {
+	color: var(--fg);
+	text-decoration: none;
+}
+
 #page-header {
 	display: flex;
 	column-gap: 30px;
