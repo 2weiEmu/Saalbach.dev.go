@@ -68,6 +68,10 @@ h3 {
 	padding: 0 10px 0 10px;
 }
 
+.his-start {
+	font-size: 2.5rem;
+}
+
 .sel {
 	color: var(--ac) !important;
 }
@@ -89,4 +93,8 @@ h3 {
 
 .content-list:first-child {
 	border-left: 1px solid var(--ac);
+}
+
+img {
+	width: 100%;
 }

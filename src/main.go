@@ -61,7 +61,9 @@ func BlogHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func ImagesHandler(writer http.ResponseWriter, request *http.Request) {
-
+    vars := mux.Vars(request)
+    image := vars["image"]
+    http.ServeFile(writer, request, "src/static/images/" + image);
 }
 
 func MainHandler(writer http.ResponseWriter, request *http.Request) {
