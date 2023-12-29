@@ -71,3 +71,22 @@ h3 {
 .sel {
 	color: var(--ac) !important;
 }
+
+.content-list {
+	display: flex;
+	column-gap: 10px;
+}
+
+.content-list a {
+	font-size: 20px;
+	color: var(--fg);
+	padding: 10px;
+	border-radius: 0 10px 10px 0;
+	border-right: 1px solid var(--ac);
+	border-top: 1px solid var(--ac);
+	border-bottom: 1px solid var(--ac);
+}
+
+.content-list:first-child {
+	border-left: 1px solid var(--ac);
+}
