@@ -38,6 +38,7 @@ a {
 }
 
 #content p, #content a, #content li {
+	color: var(--fg);
 	line-height: 39px;
 	font-size: 20px;
 }
