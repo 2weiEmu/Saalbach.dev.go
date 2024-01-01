@@ -34,6 +34,7 @@ a {
 
 #content {
 	padding: 4% 15% 0% 15%;
+	color: var(--fg);
 }
 
 #content p, #content a, #content li {
