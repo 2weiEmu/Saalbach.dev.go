@@ -4,7 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
+	"strings"
+	"text/template"
 
 	"github.com/gorilla/mux"
 )
@@ -25,6 +28,7 @@ func main() {
     r := mux.NewRouter()
     r.HandleFunc("/css/{style}", CSSHandler)
     r.HandleFunc("/images/{image}", ImagesHandler)
+    r.HandleFunc("/blog", MainBlogHandler)
     r.HandleFunc("/blogs/{blog}", BlogHandler)
     r.HandleFunc("/{page}", MainHandler)
     r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
@@ -57,7 +61,7 @@ func CSSHandler(writer http.ResponseWriter, request *http.Request) {
 func BlogHandler(writer http.ResponseWriter, request *http.Request) {
     vars := mux.Vars(request)
     blog := vars["blog"]
-    http.ServeFile(writer, request, "src/static/blogs/" + blog + ".html");
+    http.ServeFile(writer, request, "src/static/blogs/" + blog);
 }
 
 func ImagesHandler(writer http.ResponseWriter, request *http.Request) {
@@ -70,4 +74,43 @@ func MainHandler(writer http.ResponseWriter, request *http.Request) {
     vars := mux.Vars(request)
     page := vars["page"]
     http.ServeFile(writer, request, "src/static/templates/" + page + ".html");
+}
+
+func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
+    entries, err := os.ReadDir("./src/static/blogs/")
+    if err != nil {
+        // TODO:
+    }
+
+    // formatting all the entry names
+
+    entryNames := []string{}
+
+    for _, e := range entries {
+        t := strings.Split(e.Name(), "~")
+        formatted_name := strings.Split(strings.Replace(t[1], "_", " ", -1), ".")
+        formatted := strings.Join(formatted_name[:len(formatted_name)-1], "")
+        entryNames = append(entryNames, t[0] + " / " + formatted)
+    }
+    fmt.Println(entryNames)
+    
+    var completed_entries string
+    for i := 0; i < len(entries); i++ {
+        completed_entries += "<a href=\"" + entries[i].Name() + "\">" + entryNames[i] + "</a>"
+    }
+
+    blogs := "./src/static/templates/blogs.html"
+    tmpl, err := template.ParseFiles(blogs)
+    if err != nil {
+        fmt.Println(err);
+        // TODO:
+    }
+    err = tmpl.Execute(writer, completed_entries);
+
+    if err != nil {
+        fmt.Println(err);
+        // TODO:
+    }
+
+
 }
