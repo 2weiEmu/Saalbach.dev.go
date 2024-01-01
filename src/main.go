@@ -34,7 +34,6 @@ func main() {
     r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates/index.html")
     })
-    go http.ListenAndServe(":80", http.HandlerFunc(RedirectHTTP))
     http.Handle("/", r)
 
     fmt.Println("Server is almost ready.")
@@ -44,7 +43,7 @@ func main() {
     if !deploy {
         err = http.ListenAndServe(":" + port, nil)
     } else {
-        go http.ListenAndServe(":80", nil)
+        go http.ListenAndServe(":80", http.HandlerFunc(RedirectHTTP))
         err = http.ListenAndServeTLS(":" + port, cert, secret, nil)
     }
 
