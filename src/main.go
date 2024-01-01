@@ -18,10 +18,10 @@ func main() {
      * NOTE: New Format: ./main [-d] [-p PORT_NUMBER] [-c CERT_LOCATION] [-k KEY_LOCATION]
      *                   -d is deploy flag
      */
-    port := strconv.Itoa(*flag.Int("p", 8000, "Choose Port Number"))
-    deploy := *flag.Bool("d", false, "Choose if you are deploying")
-    cert := *flag.String("c", "", "State the certificate location")
-    secret := *flag.String("k", "", "State the private key location")
+    port := flag.Int("p", 8000, "Choose Port Number")
+    deploy := flag.Bool("d", false, "Choose if you are deploying")
+    cert := flag.String("c", "", "State the certificate location")
+    secret := flag.String("k", "", "State the private key location")
     flag.Parse()
 
     // must give deploy or test - otherwise invalid
@@ -34,18 +34,17 @@ func main() {
     r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates/index.html")
     })
-    http.Handle("/", r)
 
-    fmt.Println("Server is almost ready.")
+    http.Handle("/", r)
 
     var err error
 
-    if !deploy {
-        err = http.ListenAndServe(":" + port, nil)
+    if !*deploy {
+        err = http.ListenAndServe(":" + strconv.Itoa(*port), nil)
     } else {
         fmt.Println(cert, secret)
         go http.ListenAndServe(":80", http.HandlerFunc(RedirectHTTP))
-        err = http.ListenAndServeTLS(":" + port, cert, secret, nil)
+        err = http.ListenAndServeTLS(":" + strconv.Itoa(*port), *cert, *secret, nil)
     }
 
     if err != nil {
