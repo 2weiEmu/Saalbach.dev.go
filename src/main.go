@@ -43,6 +43,7 @@ func main() {
     if !deploy {
         err = http.ListenAndServe(":" + port, nil)
     } else {
+        fmt.Println(cert, secret)
         go http.ListenAndServe(":80", http.HandlerFunc(RedirectHTTP))
         err = http.ListenAndServeTLS(":" + port, cert, secret, nil)
     }
