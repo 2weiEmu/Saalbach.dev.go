@@ -34,6 +34,7 @@ func main() {
     r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates/index.html")
     })
+    go http.ListenAndServe(":80", http.HandlerFunc(RedirectHTTP))
     http.Handle("/", r)
 
     fmt.Println("Server is almost ready.")
@@ -113,4 +114,13 @@ func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
     }
 
 
+}
+
+func RedirectHTTP(w http.ResponseWriter, req *http.Request) {
+    // remove/add not default ports from req.Host
+    target := "https://" + req.Host + req.URL.Path 
+    if len(req.URL.RawQuery) > 0 {
+        target += "?" + req.URL.RawQuery
+    }
+    http.Redirect(w, req, target, http.StatusPermanentRedirect)
 }
