@@ -35,7 +35,7 @@ a {
 	padding: 4% 15% 0% 15%;
 }
 
-#content p, #content li {
+#content p, #content a, #content li {
 	line-height: 39px;
 	font-size: 20px;
 }
