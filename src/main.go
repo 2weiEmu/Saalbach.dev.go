@@ -26,10 +26,18 @@ func main() {
 
     // must give deploy or test - otherwise invalid
     r := mux.NewRouter()
-    r.HandleFunc("/css/{style}", CSSHandler)
-    r.HandleFunc("/images/{image}", ImagesHandler)
+
+    http.Handle("/css/", 
+        http.StripPrefix("/css/", http.FileServer(http.Dir("src/static/css"))))
+    http.Handle("/images/", 
+        http.StripPrefix("/images/", http.FileServer(http.Dir("src/static/images"))))
+    http.Handle("/blogs/", 
+        http.StripPrefix("/blogs/", http.FileServer(http.Dir("src/static/blogs"))))
+    http.HandleFunc("/feed", func (w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "src/static/templates/feed.rss")
+    })
+
     r.HandleFunc("/blog", MainBlogHandler)
-    r.HandleFunc("/blogs/{blog}", BlogHandler)
     r.HandleFunc("/{page}", MainHandler)
     r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
         http.ServeFile(writer, request, "src/static/templates/index.html")
@@ -50,24 +58,6 @@ func main() {
     if err != nil {
         // TODO:
     }
-}
-
-func CSSHandler(writer http.ResponseWriter, request *http.Request) {
-    vars := mux.Vars(request)
-    style := vars["style"]
-    http.ServeFile(writer, request, "src/static/css/" + style);
-}
-
-func BlogHandler(writer http.ResponseWriter, request *http.Request) {
-    vars := mux.Vars(request)
-    blog := vars["blog"]
-    http.ServeFile(writer, request, "src/static/blogs/" + blog);
-}
-
-func ImagesHandler(writer http.ResponseWriter, request *http.Request) {
-    vars := mux.Vars(request)
-    image := vars["image"]
-    http.ServeFile(writer, request, "src/static/images/" + image);
 }
 
 func MainHandler(writer http.ResponseWriter, request *http.Request) {
