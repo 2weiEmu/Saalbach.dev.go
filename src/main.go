@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -12,6 +13,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var infoLog, requestLog, errorLog *log.Logger
 
 func main() {
     /**
@@ -24,9 +26,25 @@ func main() {
     secret := flag.String("k", "", "State the private key location")
     flag.Parse()
 
+    logFile, err := os.OpenFile("./log/sis50.log", os.O_APPEND | os.O_RDWR, 664)
+    if err != nil {
+        fmt.Println("[LOGS] Failed to open main log file.")
+    }
+    defer logFile.Close()
+
+    // NOTE: LstdFlags and Ltime | Ldate may be the same, check that
+
+    loggerFlags := log.LstdFlags | log.Llongfile | log.Ldate | log.Ltime
+    infoLog = log.New(logFile, "[INFO] ", loggerFlags)
+    requestLog = log.New(logFile, "[REQUEST] ", loggerFlags)
+    errorLog = log.New(logFile, "[ERROR] ", loggerFlags)
+
+    infoLog.Println("Server is starting. Loggers have just been set up.")
+
     // must give deploy or test - otherwise invalid
     r := mux.NewRouter()
 
+    // TODO: add wrappers to log accesses to these as well?
     http.Handle("/css/", 
         http.StripPrefix("/css/", http.FileServer(http.Dir("src/static/css"))))
     http.Handle("/images/", 
@@ -40,40 +58,42 @@ func main() {
     r.HandleFunc("/blog", MainBlogHandler)
     r.HandleFunc("/{page}", MainHandler)
     r.HandleFunc("/", func (writer http.ResponseWriter, request *http.Request) {
+        requestLog.Println("Index page was accessed by: ", request.UserAgent(), "| From: ", request.RemoteAddr)
         http.ServeFile(writer, request, "src/static/templates/index.html")
     })
 
     http.Handle("/", r)
 
-    var err error
-
     if !*deploy {
         err = http.ListenAndServe(":" + strconv.Itoa(*port), nil)
     } else {
         fmt.Println(cert, secret)
-        go http.ListenAndServe(":80", http.HandlerFunc(RedirectHTTP))
+        infoLog.Println("Certificate and secret location: ", cert, secret)
         err = http.ListenAndServeTLS(":" + strconv.Itoa(*port), *cert, *secret, nil)
     }
 
     if err != nil {
-        // TODO:
+        fmt.Println("There was an error with the server:", err)
+        errorLog.Println("The server was terminated with the following error:", err)
     }
+    infoLog.Println("Server is shutting down.")
 }
 
 func MainHandler(writer http.ResponseWriter, request *http.Request) {
     vars := mux.Vars(request)
     page := vars["page"]
+    requestLog.Println("Page request from: ", request.RemoteAddr, " | By: ", request.UserAgent(), " | Accessed Page: ", page)
     http.ServeFile(writer, request, "src/static/templates/" + page + ".html");
 }
 
 func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
+    requestLog.Println("Blog page request from: ", request.RemoteAddr, " | By: ", request.UserAgent())
     entries, err := os.ReadDir("./src/static/blogs/")
     if err != nil {
-        // TODO:
+        errorLog.Println("Following error when reading the blogs directory: ", err)
     }
 
     // formatting all the entry names
-
     entryNames := []string{}
 
     for _, e := range entries {
@@ -82,7 +102,7 @@ func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
         formatted := strings.Join(formatted_name[:len(formatted_name)-1], "")
         entryNames = append(entryNames, t[0] + " / " + formatted)
     }
-    fmt.Println(entryNames)
+    infoLog.Println("Generated entryNames on blog access: ", entryNames)
     
     var completed_entries string
     for i := 0; i < len(entries); i++ {
@@ -92,24 +112,12 @@ func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
     blogs := "./src/static/templates/blogs.html"
     tmpl, err := template.ParseFiles(blogs)
     if err != nil {
-        fmt.Println(err);
-        // TODO:
+        errorLog.Println("Error parsing blog file: ", err)
     }
     err = tmpl.Execute(writer, completed_entries);
 
     if err != nil {
-        fmt.Println(err);
-        // TODO:
+        errorLog.Println("Error executing template with completed_entries: ", err)
     }
-
-
 }
 
-func RedirectHTTP(w http.ResponseWriter, req *http.Request) {
-    // remove/add not default ports from req.Host
-    target := "https://" + req.Host + req.URL.Path 
-    if len(req.URL.RawQuery) > 0 {
-        target += "?" + req.URL.RawQuery
-    }
-    http.Redirect(w, req, target, http.StatusPermanentRedirect)
-}
