@@ -3,3 +3,4 @@ go.sum
 main
 .ppm-conf
 log/
+src/static/blogs

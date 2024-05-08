@@ -106,7 +106,7 @@ func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
     
     var completed_entries string
     for i := 0; i < len(entries); i++ {
-        completed_entries += "<a href=\"blogs/" + entries[i].Name() + "\">" + entryNames[i] + "</a>"
+        completed_entries += "<a href=\"blogs/" + entries[i].Name() + "\">" + entryNames[i] + "</a><br>"
     }
 
     blogs := "./src/static/templates/blogs.html"
