@@ -87,7 +87,8 @@ func MainHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func MainBlogHandler(writer http.ResponseWriter, request *http.Request) {
-    requestLog.Println("Blog page request from: ", request.RemoteAddr, " | By: ", request.UserAgent())
+    // NOTE: I deploy this behind an Nginx instance, so it should do request logging
+    requestLog.Println("By: ", request.UserAgent())
     entries, err := os.ReadDir("./src/static/blogs/")
     if err != nil {
         errorLog.Println("Following error when reading the blogs directory: ", err)
